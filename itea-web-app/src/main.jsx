@@ -6,9 +6,9 @@ import App from "./App";
 const Index = () => (
     <AuthProvider
     config={ {
-      signInRedirectURL: "http://localhost:3000",
-      signOutRedirectURL: "http://localhost:3000",
-      clientID: "jweDabmkfrTPx2oQaSgEBijWQXUa",
+      signInRedirectURL: "http://localhost:5173/",
+      signOutRedirectURL: "http://localhost:5173/",
+      clientID: "5yRImvMLfGAtTrCQyzJOUndt4xka",
       baseUrl: "https://api.asgardeo.io/t/wathsalyagamage",
       scope: [ "openid","profile" ]
   } }
