@@ -1,7 +1,12 @@
 package com.user.security.config;
 
+import com.user.security.auth.AuthenticationService;
+import com.user.security.auth.RegisterRequest;
+import com.user.security.user.Role;
+import com.user.security.user.User;
 import com.user.security.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ApplicationConfig {
 
     private final UserRepository userRepository;
+    private final AuthenticationService authenticationService;
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
@@ -41,5 +47,26 @@ public class ApplicationConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+
+
+    @Bean
+    CommandLineRunner commandLineRunner(UserRepository userRepository){
+        return args -> {
+            RegisterRequest test = new RegisterRequest(
+                    "admin",
+                    "admin",
+                    "admin@gmail.com",
+                    "admin123",
+                    "Moratuwa"
+
+
+            );
+
+            authenticationService.register(test);
+
+        };
+
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Box from "@mui/system/Box";
-import decode from "jwt-decode";
+
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ExploreIcon from "@mui/icons-material/Explore";
@@ -10,12 +10,16 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import LoginIcon from "@mui/icons-material/Login";
 import InfoIcon from "@mui/icons-material/Info";
 
+import { useAuthContext } from "@asgardeo/auth-react";
+
 import Grid from "@mui/system/Unstable_Grid";
 import styled from "@mui/system/styled";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./styles.css";
+
+
 
 const mode = "light"; // Replace with your desired mode (either "dark" or "light")
 
@@ -78,42 +82,49 @@ const ProfileContainer = styled("div")(({ theme }) => ({
   position: "relative", // Ensure the container is relatively positioned
 }));
 
+
+
+
 const Navbar = () => {
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
-  const userData = useSelector((state) => state.auth.authData);
-
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  //console.log(user);
+  const {state,getBasicUserInfo,signOut} = useAuthContext();
+  const [userDetails, setUserDetails] = useState();
 
-  const logout = useCallback(() => {
-    dispatch({ type: "LOGOUT" });
 
-    navigate("/");
-    setUser(null);
-  }, [dispatch, navigate]);
 
-  useEffect(() => {
-    const token = user?.token;
+  useEffect( () => {
 
-    //jwt
-    if (token) {
-      const decodedToken = decode(token);
-
-      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    if(state.isAuthenticated ){
+      getBasicUserInfo()
+      .then((response) => {
+        console.log(response);
+        setUserDetails(response);
+      })
+      .catch((error) => {
+        console.error("Failed to load response "+ error);
+      })
     }
 
-    setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [logout, user?.token]);
+  }, [getBasicUserInfo,state.isAuthenticated]);
+
+
+
+
+
+
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const role = userData?.role;
+  const role = userDetails?.groups?.includes("ADMIN") ? "ADMIN" : "USER";
+
+  console.log(role)
 
   const renderComponentOrder = () => {
     switch (role) {
@@ -154,7 +165,9 @@ const Navbar = () => {
       className="navbar"
     >
       <div className="navBack"></div>
-      {userData ? (
+
+
+      {state.isAuthenticated ? (
         <Grid
           container
           position="relative"
@@ -175,7 +188,7 @@ const Navbar = () => {
               alignItems: "center", // Center horizontally
             }}
           >
-            <Link to="/">
+            <Link to='/'>
               <div
                 style={{
                   position: "relative",
@@ -187,8 +200,8 @@ const Navbar = () => {
                 }}
               >
                 <img
-                  src="https://res.cloudinary.com/dq8e751ni/image/upload/v1696230145/mn3vqsth2jmtasynvyyk.png"
-                  alt="XillicaLogo"
+                  src="https://res.cloudinary.com/dl8dikngu/image/upload/v1707476098/ziltkvevsqnizaeizkp4.png"
+                  alt="iTeaLogo"
                   width="40%"
                   style={{
                     objectFit: "cover",
@@ -215,7 +228,7 @@ const Navbar = () => {
                 style={{ marginRight: "5px", color: "black", fontSize: "15px" }}
               />
               <span className="icon-text">
-                {userData.role === "ADMIN" ? "USERS" : "EXPLORE"}
+                {role === "ADMIN" ? "USERS" : "EXPLORE"}
               </span>
             </Item>
           </Grid>
@@ -235,7 +248,7 @@ const Navbar = () => {
                 style={{ marginRight: "5px", color: "black", fontSize: "15px" }}
               />
               <span className="icon-text">
-                {userData.role === "ADMIN" ? "INVENTORY" : "ORDERS"}
+                {role === "ADMIN" ? "INVENTORY" : "ORDERS"}
               </span>
             </Item>
           </Grid>
@@ -263,21 +276,21 @@ const Navbar = () => {
                   className="icon-text"
                   style={{ textTransform: "uppercase" }}
                 >
-                  {userData.role === "ADMIN"
+                  {role === "ADMIN"
                     ? "ADMIN PROFILE"
-                    : `${userData.name} 's Profile`}
+                    : `${userDetails?.givenName} 's Profile`}
                 </span>
                 {!isDropdownOpen ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
                 <DropdownContent className={isDropdownOpen ? "show" : ""}>
                   {/* <Link to="profile" style={{ textDecoration: "none" }}>
                     <DropdownItem>Profile</DropdownItem>
                   </Link> */}
-                  {userData.role === "ADMIN" && (
+                  {role === "ADMIN" && (
                     <Link to="admin-orders" style={{ textDecoration: "none" }}>
                       <DropdownItem>Orders</DropdownItem>
                     </Link>
                   )}
-                  <DropdownItem onClick={logout}>Logout</DropdownItem>
+                  <DropdownItem onClick={()=>signOut()}>Logout</DropdownItem>
                 </DropdownContent>
               </IconItem>
             </ProfileContainer>
@@ -304,7 +317,7 @@ const Navbar = () => {
               >
                 <img
                   src="https://res.cloudinary.com/dq8e751ni/image/upload/v1696230145/mn3vqsth2jmtasynvyyk.png"
-                  alt="XillicaLogo"
+                  alt="iTeaLogo"
                   width="50%"
                   style={{
                     objectFit: "cover",
@@ -376,3 +389,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

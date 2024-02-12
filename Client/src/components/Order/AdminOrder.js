@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
-
+import { useAuthContext } from "@asgardeo/auth-react";
 import "./styles.css";
 
 import "swiper/css";
@@ -16,14 +16,30 @@ import OrderCard from "./OrderCard";
 const AdminOrder = () => {
   const dispatch = useDispatch();
 
-  const userData = useSelector((state) => state.auth.authData);
+
   const ordersData = useSelector((state) => state.order.orders);
+  const {state,getBasicUserInfo} = useAuthContext();
+  const[userDetails,setUserDetails] = useState(null);
+
+  const userData = userDetails ? userDetails : JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+      
+      if(state.isAuthenticated ){
+         getBasicUserInfo()
+        .then((response) => {
+          console.log(response);
+          setUserDetails(response);
+        })
+        .catch((error) => {
+          console.error("Failed to load response "+ error);
+        })
+      }
 
-  const isSignup = userData !== null ? true : false;
+    dispatch(fetchOrders());
+  }, [dispatch, getBasicUserInfo, state.isAuthenticated, userDetails]);
+
+  const isSignup = state?.isAuthenticated;
 
   if (!ordersData[0]) {
     return <Loading />;
@@ -73,8 +89,8 @@ const AdminOrder = () => {
               <Grid item xs={12}>
                 <OrderCard
                   id={order.id}
-                  userName={userData.name}
-                  userId={userData.id}
+                  userName={userData.username}
+                  userId={userData.userid}
                   productId={order.productId}
                   productName={order.productName}
                   customerEmail={order.customerEmail}
@@ -93,7 +109,7 @@ const AdminOrder = () => {
                   cancelled={order.cancelled}
                   packed={order.packed}
                   delivered={order.delivered}
-                  userRole={userData.role}
+                  userRole={userData.applicationRoles}
                   deliveryStart={order.deliveryStart}
                   deliveredDate={order.deliveredDate}
                 />

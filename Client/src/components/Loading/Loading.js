@@ -19,7 +19,7 @@ const Loading = () => {
       >
         <div>
           <img
-            src="https://res.cloudinary.com/dq8e751ni/image/upload/v1696230145/mn3vqsth2jmtasynvyyk.png"
+            src="https://res.cloudinary.com/dl8dikngu/image/upload/v1707476098/ziltkvevsqnizaeizkp4.png"
             alt="Loading"
             width="20%"
           />
@@ -33,3 +33,6 @@ const Loading = () => {
 };
 
 export default Loading;
+
+
+

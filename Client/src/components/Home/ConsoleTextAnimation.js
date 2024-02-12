@@ -4,7 +4,7 @@ function ConsoleTextAnimation() {
   const [colorIndex, setColorIndex] = useState(0);
   const colors = ["white", "whitw", "white"];
   const textRef = useRef("");
-  const words = ["New Arrivals", "Xillica", "With Love"];
+  const words = ["New Arrivals", "iTea", "With Love"];
 
   useEffect(() => {
     let timeout;

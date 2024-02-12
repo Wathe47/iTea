@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
+import { useAuthContext } from "@asgardeo/auth-react";
 
 import "./styles.css";
 
@@ -16,14 +17,30 @@ import OrderCard from "./OrderCard";
 const UserOrder = () => {
   const dispatch = useDispatch();
 
-  const userData = useSelector((state) => state.auth.authData);
+  
   const ordersData = useSelector((state) => state.order.orders);
+  const {state,getBasicUserInfo} = useAuthContext();
+
+  const [userDetails, setUserDetails] = useState(null);
+  const userData = userDetails ? userDetails : JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
+
+    if(state.isAuthenticated ){
+      getBasicUserInfo()
+      .then((response) => {
+        console.log(response);
+        setUserDetails(response);
+      })
+      .catch((error) => {
+        console.error("Failed to load response "+ error);
+      })
+    }
+
     dispatch(fetchOrderByEmail(userData.email));
   }, [dispatch, userData.email]);
 
-  const isSignup = userData !== null ? true : false;
+  const isSignup = state?.isAuthenticated;
 
   if (!ordersData[0]) {
     return <Loading />;
@@ -73,8 +90,8 @@ const UserOrder = () => {
               <Grid item xs={12}>
                 <OrderCard
                   id={order.id}
-                  userName={userData.name}
-                  userId={userData.id}
+                  userName={userData.username}
+                  userId={userData.userid}
                   productId={order.productId}
                   productName={order.productName}
                   unitPrice={order.unitPrice}
@@ -86,7 +103,7 @@ const UserOrder = () => {
                   deliveryPersonId={order.deliveryPersonId}
                   orderDate={order.orderDate}
                   cancelled={order.cancelled}
-                  userRole={userData.role}
+                  userRole={userData.applicationRoles}
                   deliveryApproved={order.deliveryApproved}
                   approvalDate={order.approvalDate}
                   packedDate={order.packedDate}

@@ -1,9 +1,8 @@
 import { AUTH, FETCH_ALL_USERS, DELETE_USER } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 
-export const signin = (formData, history) => async (dispatch) => {
+export const signin = (data, history) => async (dispatch) => {
   try {
-    const { data } = await api.signIn(formData);
 
     dispatch({ type: AUTH, data });
 
