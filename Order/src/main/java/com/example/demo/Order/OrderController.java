@@ -25,10 +25,6 @@ public class OrderController {
         return orderService.getOrders();
     }
 
-    @GetMapping("/open")
-    public List<Order> getOpenOrders() {
-        return orderService.getOpenOrders();
-    }
 
     @GetMapping("/fetch/{id}")
     public Optional<Order> getOrderById(@PathVariable Long id) {
@@ -41,10 +37,6 @@ public class OrderController {
         return orderService.getOrdersByCustomerEmail(customerEmail);
     }
 
-    @GetMapping("/fetch-by-deliver-id/{deliverId}")
-    public List<Order> getOrdersByDeliverId(@PathVariable Long deliverId) {
-        return orderService.getOrdersByDeliverId(deliverId);
-    }
 
     @PostMapping("/add")
     public void addNewOrder(@RequestBody Order order) {

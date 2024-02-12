@@ -1,28 +1,18 @@
 import { AUTH, FETCH_ALL_USERS, DELETE_USER } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 
-export const signin = (data, history) => async (dispatch) => {
+export const signin = (data) =>  (dispatch) => {
   try {
 
     dispatch({ type: AUTH, data });
 
-    history.push("/");
+    // history.push("/");
   } catch (error) {
     console.log(error);
   }
 };
 
-export const signup = (formData, history) => async (dispatch) => {
-  try {
-    const { data } = await api.signUp(formData);
 
-    dispatch({ type: AUTH, data });
-
-    history.push("/");
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const fetchUsers = () => async (dispatch) => {
   try {

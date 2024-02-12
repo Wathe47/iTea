@@ -37,12 +37,12 @@ const AdminOrder = () => {
       }
 
     dispatch(fetchOrders());
-  }, [dispatch, getBasicUserInfo, state.isAuthenticated, userDetails]);
+  }, [dispatch,state.isAuthenticated]);
 
   const isSignup = state?.isAuthenticated;
 
   if (!ordersData[0]) {
-    return <Loading />;
+    return <Loading text={"No Orders Found!"} />;
   }
   if (!isSignup) {
     return (

@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import "./styles.css";
 
-const Loading = () => {
+const Loading = ({text}) => {
   return (
     <Grow in>
       <Container
@@ -25,7 +25,7 @@ const Loading = () => {
           />
         </div>
         <div>
-          <CircularProgress />
+          <h1>{text}</h1>
         </div>
       </Container>
     </Grow>

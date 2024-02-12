@@ -15,9 +15,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o ORDER BY o.id DESC")
     List<Order> fetchAllOrders();
 
-    @Query("SELECT o FROM Order o WHERE o.isPacked = true AND o.isDeliveryStart = false ORDER BY o.id DESC")
-    List<Order> fetchOpenOrders();
 
-    @Query("SELECT o FROM Order o WHERE o.deliveryPersonId = ?1 ORDER BY o.id DESC")
-    List<Order> findAllByDeliverId(Long id);
+
+
 }

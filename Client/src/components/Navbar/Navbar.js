@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Box from "@mui/system/Box";
-
+import { useDispatch } from "react-redux";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ExploreIcon from "@mui/icons-material/Explore";
@@ -18,7 +18,7 @@ import styled from "@mui/system/styled";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./styles.css";
-
+import { signin } from "../../actions/auth";
 
 
 const mode = "light"; // Replace with your desired mode (either "dark" or "light")
@@ -88,22 +88,28 @@ const ProfileContainer = styled("div")(({ theme }) => ({
 const Navbar = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const {state,getBasicUserInfo,signOut} = useAuthContext();
   const [userDetails, setUserDetails] = useState();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));  
 
 
 
   useEffect( () => {
 
+
     if(state.isAuthenticated ){
       getBasicUserInfo()
       .then((response) => {
         console.log(response);
+        localStorage.setItem("profile", JSON.stringify(response));
         setUserDetails(response);
+
+        dispatch(signin(response));
       })
       .catch((error) => {
         console.error("Failed to load response "+ error);
@@ -124,7 +130,8 @@ const Navbar = () => {
 
   const role = userDetails?.groups?.includes("ADMIN") ? "ADMIN" : "USER";
 
-  console.log(role)
+  console.log(role);
+  console.log(user.email);
 
   const renderComponentOrder = () => {
     switch (role) {
@@ -316,9 +323,9 @@ const Navbar = () => {
                 }}
               >
                 <img
-                  src="https://res.cloudinary.com/dq8e751ni/image/upload/v1696230145/mn3vqsth2jmtasynvyyk.png"
+                  src="https://res.cloudinary.com/dl8dikngu/image/upload/v1707476098/ziltkvevsqnizaeizkp4.png"
                   alt="iTeaLogo"
-                  width="50%"
+                  width="100%"
                   style={{
                     objectFit: "cover",
                     position: "relative",

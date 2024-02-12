@@ -28,6 +28,7 @@ public class Inventory {
     private String description;
     private long price;
     private long quantity;
+    private String manufacturerEmail;
 
     @ElementCollection
     @CollectionTable(name = "image_urls", joinColumns = @JoinColumn(name = "inventory_id"))

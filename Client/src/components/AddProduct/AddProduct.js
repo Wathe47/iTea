@@ -5,15 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
 import { addProduct, updateProduct } from "../../actions/product";
 import { validateProductForm } from "../../validation/formValidation";
+import { useAuthContext } from "@asgardeo/auth-react";
 
 const AddProductForm = () => {
+  
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+
+  const { state, getBasicUserInfo } = useAuthContext();
+  const [userDetails, setUserDetails] = useState();
+  const user  = userDetails ? userDetails : JSON.parse(localStorage.getItem("profile"));
+  console.log(user?.email);
+
+
   const [productData, setProductData] = useState({
     name: "",
     price: "",
     description: "",
     quantity: "",
+    manufacturerEmail:user?.email,
     imageUrls: [], // Change to an array
   });
 
@@ -25,7 +35,11 @@ const AddProductForm = () => {
 
   useEffect(() => {
     if (product) setProductData(product);
+
+    
   }, [product]);
+
+
 
   const handleSubmit = (event) => {
     event.preventDefault();

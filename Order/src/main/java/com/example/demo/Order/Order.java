@@ -32,19 +32,6 @@ public class Order {
     private long totalPrice;
     private long quantity;
     private long oldQuantity;
-    private String deliveryPerson;
-    private String address;
-    private long deliveryPersonId;
-    private boolean isApproved;
-    private boolean isPacked;
-    private boolean isDeliveryStart;
-    private boolean isDelivered;
-    private boolean isCancelled;
-    private Date orderDate;
-    private Date approvalDate;
-    private Date packedDate;
-    private Date deliveryStartDate;
-    private Date DeliveredDate;
-    private boolean isDeliveryApproved;
+    private String manufacturerEmail;
 
 }
