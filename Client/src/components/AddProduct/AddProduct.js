@@ -12,11 +12,27 @@ const AddProductForm = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
-  const { state, getBasicUserInfo } = useAuthContext();
-  const [userDetails, setUserDetails] = useState();
-  const user  = userDetails ? userDetails : JSON.parse(localStorage.getItem("profile"));
-  console.log(user?.email);
 
+  
+
+  const {state,getBasicUserInfo,signOut} = useAuthContext();
+  const [userDetails, setUserDetails] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (state?.isAuthenticated) {
+        try {
+          const response = await getBasicUserInfo();
+          setUserDetails(response);
+        } catch (error) {
+          console.error("Failed to load response " + error);
+        }
+      }
+    };
+    fetchData();
+  }, []);
+  
+  const user  = userDetails;
 
   const [productData, setProductData] = useState({
     name: "",

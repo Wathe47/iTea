@@ -11,6 +11,9 @@ function Auth() {
   useEffect(() => {
     if (!state.isAuthenticated) {
       signIn()
+      .then((response) => {
+        console.log(response);
+      })
       .catch((error) => {
         console.error("Failed to sign in " + error);
       });

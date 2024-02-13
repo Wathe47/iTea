@@ -101,24 +101,12 @@ const AdminOrder = () => {
                   productId={order.productId}
                   productName={order.productName}
                   customerEmail={order.customerEmail}
-                  deliveryApproved={order.deliveryApproved}
                   unitPrice={order.unitPrice}
                   totalPrice={order.totalPrice}
                   quantity={order.quantity}
-                  deliveryPerson={order.deliveryPerson}
-                  address={order.address}
-                  deliveryPersonId={order.deliveryPersonId}
-                  orderDate={order.orderDate}
-                  approvalDate={order.approvalDate}
-                  packedDate={order.packedDate}
-                  deliveryStartDate={order.deliveryStartDate}
-                  approved={order.approved}
                   cancelled={order.cancelled}
-                  packed={order.packed}
-                  delivered={order.delivered}
                   userRole={userData.applicationRoles}
-                  deliveryStart={order.deliveryStart}
-                  deliveredDate={order.deliveredDate}
+
                 />
               </Grid>
             ))}

@@ -35,6 +35,9 @@ const Users = () => {
       if (state?.isAuthenticated) {
         try {
           const response = await getBasicUserInfo();
+          window.localStorage.setItem("user", JSON.stringify(response));
+          // console.log(window.localStorage.getItem("user"));
+
           setUserDetails(response);
         } catch (error) {
           console.error("Failed to load response " + error);
@@ -42,21 +45,19 @@ const Users = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [getBasicUserInfo]);
 
-  let token = null;
-  useEffect(async () => {
+
+  useEffect( () => {
+  
+  const fetchData = async()=>  {
     if (role === "ADMIN") {
-       token = await getToken();
-      console.log(token);
-      userDetails.token = token;
-    }
-
-    
-  const tokenEndpoint = `https://api.asgardeo.io/t/wathsalyagamage/scim2/Users`;
-  const headers = new Headers({
-    Authorization: `Bearer  ${token}`,
-  });
+       const token = await getToken();
+       window.localStorage.setItem("token", token);
+      const tokenEndpoint = `https://api.asgardeo.io/t/wathsalyagamage/scim2/Users`;
+      const headers = new Headers({
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+      });
 
   try {
     const response = await fetch(tokenEndpoint, {
@@ -66,20 +67,18 @@ const Users = () => {
 
     if (!response.ok) {
       console.log(response.statusText);
-      throw new Error(
-        `Failed to retrieve access token: ${response.statusText}`
-      );
     }
 
-    const data = await response.json();
+    const data = response;
     console.log(data)
     setUsers(data);
   } catch (error) {
     console.error("Error:", error.message);
   }
 
-
-  },[])
+}}
+  fetchData();
+  },[getToken])
 
 
   const handleDelete = (id) => {

@@ -95,7 +95,6 @@
 
     const {state,getBasicUserInfo,signOut} = useAuthContext();
     const [userDetails, setUserDetails] = useState();
-    const [user,setUser] = useState();
 
     useEffect(() => {
       const fetchData = async () => {
@@ -110,6 +109,13 @@
       };
       fetchData();
     }, []);
+
+
+   const handleSignOut = () => {
+        signOut();
+        window.localStorage.clear();
+        navigate("/");
+    }
     
       
 
@@ -296,7 +302,7 @@
                         <DropdownItem>Orders</DropdownItem>
                       </Link>
                     )}
-                    <DropdownItem onClick={()=>signOut()}>Logout</DropdownItem>
+                    <DropdownItem onClick={handleSignOut}>Logout</DropdownItem>
                   </DropdownContent>
                 </IconItem>
               </ProfileContainer>

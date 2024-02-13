@@ -2,15 +2,15 @@ import axios from "axios";
 
 const API = axios.create();
 
-API.interceptors.request.use((req) => {
-  if (localStorage.getItem("profile") !== undefined) {
-    req.headers.Authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("profile")).token
-    }`;
-  }
+// API.interceptors.request.use((req) => {
+//   if (localStorage.getItem("profile") !== undefined) {
+//     req.headers.Authorization = `Bearer ${
+//       JSON.parse(localStorage.getItem("profile")).token
+//     }`;
+//   }
 
-  return req;
-});
+//   return req;
+// });
 
 //Auth
 export const signIn = (formData) =>

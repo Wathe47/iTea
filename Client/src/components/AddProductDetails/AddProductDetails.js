@@ -34,6 +34,7 @@ const AddProductInfoForm = () => {
   });
 
   const [currentId, setCurrentId] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -94,6 +95,12 @@ const AddProductInfoForm = () => {
     });
 
     setCurrentId(clickedProduct.id);
+    setShowForm(true);
+
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth",
+    });
   };
 
   const addImageURL = () => {
@@ -108,183 +115,7 @@ const AddProductInfoForm = () => {
 
   return (
     <Container maxWidth>
-      <Paper
-        className="paper"
-        style={{
-          position: "relative",
-          maxWidth: "25%",
-          maxHeight: "4000px",
-          margin: "170px 0 0 50%",
-          transform: "translate(-50%, 0)",
-        }}
-        elevation={0}
-      >
-        <Typography
-          variant="h6"
-          style={{
-            marginBottom: "20px",
-          }}
-        >
-          {currentId ? "Add Details" : "Edit/Add Products"}
-        </Typography>
-        <Paper
-          className="paper"
-          fullWidth
-          style={{
-            position: "relative",
-            display: "flex",
-            maxWidth: "100%",
-            overflowY: "scroll",
-            maxHeight: "350px",
-          }}
-          elevation={0}
-        >
-          <form
-            autoComplete="off"
-            noValidate
-            className="form"
-            onSubmit={handleSubmit}
-          >
-            <TextField
-              sx={{ my: 0.5 }}
-              name="product_name"
-              variant="outlined"
-              label="Product Name"
-              fullWidth
-              required
-              value={productData.name}
-              onChange={(e) =>
-                setProductData({ ...productData, name: e.target.value })
-              }
-              error={Boolean(errors.name)}
-              helperText={errors.name}
-              onFocus={() => {
-                setErrors({ ...errors, name: "" });
-              }}
-            />
-
-            <TextField
-              sx={{ my: 0.5 }}
-              multiline
-              name="description"
-              variant="outlined"
-              label="Description"
-              fullWidth
-              required
-              value={productData.description}
-              onChange={(e) =>
-                setProductData({ ...productData, description: e.target.value })
-              }
-              error={Boolean(errors.description)}
-              helperText={errors.description}
-              onFocus={() => {
-                setErrors({ ...errors, description: "" });
-              }}
-            />
-            <TextField
-              sx={{ my: 0.5 }}
-              multiline
-              name="imageUrls"
-              variant="outlined"
-              label="ImageUrls"
-              fullWidth
-              required
-              value={productData.imageUrls.join(", ")}
-              onChange={(e) =>
-                setProductData({
-                  ...productData,
-                  imageUrls: e.target.value
-                    .split(", ")
-                    .filter((url) => url.trim() !== ""),
-                })
-              }
-            />
-            <Button
-              sx={{ my: 0 }}
-              size="small"
-              onClick={addImageURL}
-              style={{
-                border: "0.5px solid",
-                borderRadius: "10px",
-                color: "black",
-                margin: "10px 0px",
-                fontSize: "smaller",
-              }}
-              fullWidth
-            >
-              CLICK TO ADD MORE IMAGES
-            </Button>
-
-            <TextField
-              sx={{ my: 0.5 }}
-              name="price"
-              variant="outlined"
-              label="Price"
-              fullWidth
-              required
-              value={productData.price}
-              onChange={(e) =>
-                setProductData({ ...productData, price: e.target.value })
-              }
-              error={Boolean(errors.price)}
-              helperText={errors.price}
-              onFocus={() => {
-                setErrors({ ...errors, price: "" });
-              }}
-            />
-
-            <TextField
-              sx={{ my: 0.5 }}
-              name="quantity"
-              variant="outlined"
-              label="Quantity"
-              fullWidth
-              required
-              value={productData.quantity}
-              onChange={(e) =>
-                setProductData({ ...productData, quantity: e.target.value })
-              }
-              error={Boolean(errors.quantity)}
-              helperText={errors.quantity}
-              onFocus={() => {
-                setErrors({ ...errors, quantity: "" });
-              }}
-            />
-            <TextField
-              sx={{ my: 3 }}
-              name="addQuantity"
-              variant="outlined"
-              label="addQuantity"
-              fullWidth
-              value={productData.addQuantity}
-              onChange={(e) =>
-                setProductData({ ...productData, addQuantity: e.target.value })
-              }
-              error={Boolean(errors.addQuantity)}
-              helperText={errors.addQuantity}
-              onFocus={() => {
-                setErrors({ ...errors, addQuantity: "" });
-              }}
-            />
-          </form>
-        </Paper>
-        <Button
-          sx={{ my: 0.5 }}
-          className="buttonSubmit"
-          variant="outlined"
-          size="large"
-          onClick={handleSubmit}
-          type="submit"
-          style={{
-            background: "black",
-            borderRadius: "20px",
-            marginTop: "10px",
-            color: "white",
-            fontSize: "small",
-          }}
-        >
-          {currentId ? "Update" : "Select"}
-        </Button>
+      <Link to="/addproduct" style={{ color: "whitbacle" }}> 
         <Button
           sx={{ my: 0 }}
           variant="filled"
@@ -292,28 +123,19 @@ const AddProductInfoForm = () => {
           size="small"
           onClick={clear}
           style={{
-            background: "white",
+            background: "black",
             borderRadius: "20px",
-            color: "black",
+            marginTop: "120px",
+            marginBottom: "-120px",
+            marginLeft: "70%",
+            color: "white",
             fontSize: "smaller",
-          }}
-          fullWidth
+          }} 
         >
-          Clear
+          ADD PRODUCTS 
+       
         </Button>
-        <Link to="/addproduct" style={{ textDecoration: "none" }}>
-          <Typography
-            fullWidth
-            style={{
-              fontSize: "13px",
-              fontWeight: "600",
-            }}
-            variant="filled"
-          >
-            + ADD PRODUCTS +
-          </Typography>
-        </Link>
-      </Paper>
+        </Link> 
       <Box
         sx={{
           position: "relative",
@@ -323,7 +145,7 @@ const AddProductInfoForm = () => {
           alignItems: "center",
           width: "100%",
           paddingY: "50px",
-          mt: 2,
+          mt: 20,
         }}
         style={{ background: "#ebebeb" }}
       >
@@ -419,6 +241,188 @@ const AddProductInfoForm = () => {
           </Card>
         ))}
       </Box>
+      {showForm && (
+      <Paper
+        className="paper"
+        style={{
+          position: "relative",
+          maxWidth: "25%",
+          maxHeight: "4000px",
+          margin: "170px 0 0 50%",
+          transform: "translate(-50%, 0)",
+        }}
+        elevation={0}
+      >
+        <Typography
+          variant="h6"
+          style={{
+            marginBottom: "20px",
+          }}
+        >
+          {currentId ? "Add Details" : "Edit Products"}
+        </Typography>
+        <Paper
+          className="paper"
+          fullWidth
+          style={{
+            position: "relative",
+            display: "flex",
+            maxWidth: "100%",
+
+          }}
+          elevation={0}
+        >
+          <form
+            autoComplete="off"
+            noValidate
+            className="form"
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              sx={{ my: 0.5 }}
+              name="product_name"
+              variant="outlined"
+              label="Product Name"
+              fullWidth
+              required
+              value={productData.name}
+              onChange={(e) =>
+                setProductData({ ...productData, name: e.target.value })
+              }
+              error={Boolean(errors.name)}
+              helperText={errors.name}
+              onFocus={() => {
+                setErrors({ ...errors, name: "" });
+              }}
+            />
+
+            <TextField
+              sx={{ my: 0.5 }}
+              multiline
+              name="description"
+              variant="outlined"
+              label="Description"
+              fullWidth
+              required
+              value={productData.description}
+              onChange={(e) =>
+                setProductData({ ...productData, description: e.target.value })
+              }
+              error={Boolean(errors.description)}
+              helperText={errors.description}
+              onFocus={() => {
+                setErrors({ ...errors, description: "" });
+              }}
+            />
+            <TextField
+              sx={{ my: 0.5 }}
+              multiline
+              name="imageUrls"
+              variant="outlined"
+              label="ImageUrls"
+              fullWidth
+              required
+              value={productData.imageUrls.join(", ")}
+              onChange={(e) =>
+                setProductData({
+                  ...productData,
+                  imageUrls: e.target.value
+                    .split(", ")
+                    .filter((url) => url.trim() !== ""),
+                })
+              }
+            />
+
+
+            <TextField
+              sx={{ my: 0.5 }}
+              name="price"
+              variant="outlined"
+              label="Price"
+              fullWidth
+              required
+              value={productData.price}
+              onChange={(e) =>
+                setProductData({ ...productData, price: e.target.value })
+              }
+              error={Boolean(errors.price)}
+              helperText={errors.price}
+              onFocus={() => {
+                setErrors({ ...errors, price: "" });
+              }}
+            />
+
+            <TextField
+              sx={{ my: 0.5 }}
+              name="quantity"
+              variant="outlined"
+              label="Quantity"
+              fullWidth
+              required
+              value={productData.quantity}
+              onChange={(e) =>
+                setProductData({ ...productData, quantity: e.target.value })
+              }
+              error={Boolean(errors.quantity)}
+              helperText={errors.quantity}
+              onFocus={() => {
+                setErrors({ ...errors, quantity: "" });
+              }}
+            />
+            <TextField
+              sx={{ my: 3 }}
+              name="addQuantity"
+              variant="outlined"
+              label="addQuantity"
+              fullWidth
+              value={productData.addQuantity}
+              onChange={(e) =>
+                setProductData({ ...productData, addQuantity: e.target.value })
+              }
+              error={Boolean(errors.addQuantity)}
+              helperText={errors.addQuantity}
+              onFocus={() => {
+                setErrors({ ...errors, addQuantity: "" });
+              }}
+            />
+          </form>
+        </Paper>
+        <Button
+          sx={{ my: 0.5 }}
+          className="buttonSubmit"
+          variant="outlined"
+          size="large"
+          onClick={handleSubmit}
+          type="submit"
+          style={{
+            background: "black",
+            borderRadius: "20px",
+            marginTop: "10px",
+            color: "white",
+            fontSize: "small",
+          }}
+        >
+          {currentId ? "Update" : "Select"}
+        </Button>
+        <Button
+          sx={{ my: 0 }}
+          variant="filled"
+          color="secondary"
+          size="small"
+          onClick={clear}
+          style={{
+            background: "white",
+            borderRadius: "20px",
+            color: "black",
+            fontSize: "smaller",
+          }}
+          fullWidth
+        >
+          Clear
+        </Button>
+        
+      </Paper>
+      )}
     </Container>
   );
 };
