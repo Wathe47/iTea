@@ -16,3 +16,5 @@ export const ADD_ORDER = "ADD_ORDER";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const FETCH_ORDER_BY_EMAIL = "FETCH_ORDER_BY_EMAIL";
+
+export const FETCH_SELLERS = "FETCH_SELLERS";

@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import Loading from "../Loading/Loading";
-import { fetchOpenOrders, fetchOrderByDeliverId } from "../../actions/order";
+import { fetchOrders } from "../../actions/order";
 import OrderCard from "../Order/OrderCard";
 
 const DeliverExploreOrder = () => {
@@ -20,7 +20,7 @@ const DeliverExploreOrder = () => {
   const ordersData = useSelector((state) => state.order.orders);
 
   useEffect(() => {
-    dispatch(fetchOpenOrders());
+    dispatch(fetchOrders());
   }, [dispatch]);
 
   const isSignup = userData !== null ? true : false;

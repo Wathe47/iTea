@@ -32,6 +32,6 @@ public class Order {
     private long totalPrice;
     private long quantity;
     private long oldQuantity;
-    private String manufacturerEmail;
+        private String manufacturerEmail;
 
 }

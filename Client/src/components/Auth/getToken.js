@@ -2,7 +2,7 @@ export const getToken = async () => {
     const orgName = "wathsalyagamage";
     const clientID = "eC4YVI5zDy7G5eQE3fiZKjgqpQwa";
     const clientSecret = "vVvh4wt2ChgjjG8TVZX1qvY2lBtd1b98l3EvDHxqi5Ma";
-    const scope = "openid address app_roles email groups phone profile";
+    const scope = "internal_user_mgt_create internal_user_mgt_delete internal_user_mgt_list internal_user_mgt_update internal_user_mgt_view";
   
     const tokenEndpoint = `https://api.asgardeo.io/t/${orgName}/oauth2/token`;
     const headers = new Headers({

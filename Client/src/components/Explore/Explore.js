@@ -12,7 +12,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
-
+  console.log(products);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 16; // Constant value for items per page
 
@@ -44,7 +44,7 @@ const ProductList = () => {
                 <CardMedia
                   component="img"
                   style={{ objectFit: "cover", height: "350px" }}
-                  image={product.imageUrls[1]}
+                  image={product.imageUrls[0]}
                   alt={product.name}
                 />
                 <CardContent>

@@ -32,9 +32,14 @@ public class OrderController {
     }
 
 
-    @GetMapping("/fetch-by-email/{customerEmail}")
-    public List<Order> getOrdersByCustomerEmail(@PathVariable String customerEmail) {
-        return orderService.getOrdersByCustomerEmail(customerEmail);
+    @GetMapping("/fetch-by-customer-email/{email}")
+    public List<Order> getOrdersByCustomerEmail(@PathVariable String email) {
+        return orderService.getOrdersByCustomerEmail(email);
+    }
+
+    @GetMapping("/fetch-by-manufacturer-email/{email}")
+    public List<Order> getOrdersByManufacturerEmail(@PathVariable String email) {
+        return orderService.getOrdersByManufacturerEmail(email);
     }
 
 

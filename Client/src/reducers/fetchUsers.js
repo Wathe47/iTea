@@ -1,3 +1,5 @@
+import { FETCH_SELLERS } from "../constants/actionTypes";
+
 const fetchUsers = (state = { users: null }, action) => {
   switch (action.type) {
     case "FETCH_ALL_USERS":

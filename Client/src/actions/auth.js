@@ -1,4 +1,4 @@
-import { AUTH, FETCH_ALL_USERS, DELETE_USER } from "../constants/actionTypes";
+import { AUTH, FETCH_ALL_USERS, DELETE_USER, FETCH_SELLERS } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 
 export const signin = (data) =>  (dispatch) => {
@@ -33,3 +33,13 @@ export const deleteUser = (id) => async (dispatch) => {
     console.log(error);
   }
 };
+
+// export const fetchSellers = () => async (dispatch) => {
+//   try {
+//     const { data } = await api.fetchSellers();
+
+//     dispatch({ type: FETCH_SELLERS, data });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// } 

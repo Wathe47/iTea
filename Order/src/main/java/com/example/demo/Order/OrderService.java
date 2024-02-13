@@ -33,6 +33,10 @@ public class OrderService {
         return orderRepository.findByCustomerEmail(customerEmail);
     }
 
+    public List<Order> getOrdersByManufacturerEmail(String email) {
+        return orderRepository.findByManufacturerEmail(email);
+    }
+
 
 
     public void addNewOrder(Order order) {

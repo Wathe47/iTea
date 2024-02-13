@@ -6,6 +6,8 @@ import styled from "@mui/system/styled";
 import { Link } from "react-router-dom";
 import "./style.css";
 import Loading from "../Loading/Loading";
+import { useAuthContext } from "@asgardeo/auth-react";
+import { getToken } from "../Auth/getToken";
 
 const Item = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -20,12 +22,34 @@ const Item = styled("div")(({ theme }) => ({
 const Home = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
+  console.log(products)
+  const {state, getBasicUserInfo} = useAuthContext();
+  const [userDetails, setUserDetails] = useState(null);
+
 
   const [activeSlide, setActiveSlide] = useState(0); // New state for active slide index
 
   useEffect(() => {
+    console.log("hi")
+
+    if(state?.isAuthenticated ){
+      getBasicUserInfo()
+      .then((response) => {
+        console.log(response);
+        setUserDetails(response);
+
+      })
+      .catch((error) => {
+        console.error("Failed to load response "+ error);
+      })
+    }
+  }, []);
+
+
+  useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
+
 
   // Function to navigate to the next slide
   const nextSlide = () => {
@@ -57,7 +81,7 @@ const Home = () => {
                 style={{ display: index === activeSlide ? "block" : "none" }}
               >
                 <Link to={`/explore/${item.id}`} style={{ textDecoration: "none" }}>
-                  <img src={item.imageUrls[1]} alt={item.name} />
+                  <img src={item.imageUrls[0]} alt={item.name} />
                   <Typography variant="body2" className="slide-title" color="white">
                     {item.name}
                   </Typography>

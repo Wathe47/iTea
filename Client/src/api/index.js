@@ -3,7 +3,7 @@ import axios from "axios";
 const API = axios.create();
 
 API.interceptors.request.use((req) => {
-  if (localStorage.getItem("profile")) {
+  if (localStorage.getItem("profile") !== undefined) {
     req.headers.Authorization = `Bearer ${
       JSON.parse(localStorage.getItem("profile")).token
     }`;
@@ -23,6 +23,7 @@ export const deleteUser = (id) =>
   API.delete(`http://localhost:8080/api/v1/auth/delete-user/${id}`);
 export const updateProfile = (id) =>
   API.put(`http://localhost:8080/api/v1/auth/update-profile/${id}`);
+
 
 //Products
 export const fetchProducts = () =>
@@ -57,10 +58,14 @@ export const fetchOrders = () =>
 export const fetchOpenOrders = () =>
   API.get("http://localhost:8082/api/v1/order/open");
 export const fetchOrderByEmail = (userEmail) =>
-  API.get(`http://localhost:8082/api/v1/order/fetch-by-email/${userEmail}`);
+  API.get(`http://localhost:8082/api/v1/order/fetch-by-customer-email/${userEmail}`);
+export const fetchOrderBymanufacturerEmail = (manufacturerEmail) =>
+  API.get(`http://localhost:8082/api/v1/order/fetch-by-manufacturer-email/${manufacturerEmail}`);
 export const fetchOrderByDeliverId = (id) =>
   API.get(`http://localhost:8082/api/v1/order/fetch-by-deliver-id/${id}`);
 export const updateOrder = (id, updatedOrderData) =>
   API.put(`http://localhost:8082/api/v1/order/update/${id}`, updatedOrderData);
 export const deleteOrder = (id) =>
   API.delete(`http://localhost:8082/api/v1/order/delete/${id}`);
+
+//Sellers

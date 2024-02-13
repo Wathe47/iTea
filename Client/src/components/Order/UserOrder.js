@@ -22,7 +22,7 @@ const UserOrder = () => {
   const {state,getBasicUserInfo} = useAuthContext();
 
   const [userDetails, setUserDetails] = useState(null);
-  const userData = userDetails ? userDetails : JSON.parse(localStorage.getItem("profile"));
+  const userData = userDetails;
 
   useEffect(() => {
 
@@ -37,8 +37,8 @@ const UserOrder = () => {
       })
     }
 
-    dispatch(fetchOrderByEmail(userData.email));
-  }, [dispatch, userData.email]);
+    dispatch(fetchOrderByEmail(userData?.email));
+  }, [dispatch, userData?.email]);
 
   const isSignup = state?.isAuthenticated;
 

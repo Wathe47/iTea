@@ -9,6 +9,7 @@ import { addOrder } from "../../actions/order";
 import "./styles.css";
 
 const initialState = {
+  manufacturerEmail: "",
   customerEmail: "",
   quantity: null,
   productId: null,
@@ -40,6 +41,7 @@ const ImageCarousel = () => {
     const quantity = parseInt(e.target.value, 10);
     setFormData({
       ...formData,
+      manufacturerEmail:product.manufacturerEmail,
       productId: product.id,
       customerEmail: userData.email,
       address: userData.address,

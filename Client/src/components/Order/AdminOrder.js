@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import Loading from "../Loading/Loading";
-import { fetchOrders } from "../../actions/order";
+import { fetchOrderBymanufacturerEmail } from "../../actions/order";
 import OrderCard from "./OrderCard";
 
 const AdminOrder = () => {
@@ -21,23 +21,30 @@ const AdminOrder = () => {
   const {state,getBasicUserInfo} = useAuthContext();
   const[userDetails,setUserDetails] = useState(null);
 
-  const userData = userDetails ? userDetails : JSON.parse(localStorage.getItem("profile"));
+   
+  const userData = userDetails;
 
   useEffect(() => {
-      
-      if(state.isAuthenticated ){
-         getBasicUserInfo()
-        .then((response) => {
-          console.log(response);
+    const fetchData = async () => {
+      if (state?.isAuthenticated) {
+        try {
+          const response = await getBasicUserInfo();
+          console.log(response?.email);
+          dispatch(fetchOrderBymanufacturerEmail(response?.email));
           setUserDetails(response);
-        })
-        .catch((error) => {
-          console.error("Failed to load response "+ error);
-        })
+        } catch (error) {
+          console.error("Failed to load response " + error);
+        }
       }
+      
+    };
+    fetchData();
+    
+  }, []);
+  
+    
 
-    dispatch(fetchOrders());
-  }, [dispatch,state.isAuthenticated]);
+
 
   const isSignup = state?.isAuthenticated;
 

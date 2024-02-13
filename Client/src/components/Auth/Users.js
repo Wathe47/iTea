@@ -9,15 +9,78 @@ import { deleteUser, fetchUsers } from "../../actions/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Loading from "../Loading/Loading";
+import { getToken } from "./getToken";
+import { useState } from "react";
+import { useAuthContext } from "@asgardeo/auth-react";
 
 const Users = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.fetchUsers.users);
-  const role = useSelector((state) => state.auth.authData.role);
+  const [users, setUsers] = useState();
+  const {state,getBasicUserInfo,signOut} = useAuthContext();
+  const [userDetails, setUserDetails] = useState();
+
+  let role;
+  if(userDetails?.groups?.includes("ADMIN")){
+    role = "ADMIN";
+  }else if(userDetails?.groups?.includes("MANUFACTURER")){
+    role = "MANUFACTURER";
+  }else{
+    role = "USER";
+  }
+
+
 
   useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+    const fetchData = async () => {
+      if (state?.isAuthenticated) {
+        try {
+          const response = await getBasicUserInfo();
+          setUserDetails(response);
+        } catch (error) {
+          console.error("Failed to load response " + error);
+        }
+      }
+    };
+    fetchData();
+  }, []);
+
+  let token = null;
+  useEffect(async () => {
+    if (role === "ADMIN") {
+       token = await getToken();
+      console.log(token);
+      userDetails.token = token;
+    }
+
+    
+  const tokenEndpoint = `https://api.asgardeo.io/t/wathsalyagamage/scim2/Users`;
+  const headers = new Headers({
+    Authorization: `Bearer  ${token}`,
+  });
+
+  try {
+    const response = await fetch(tokenEndpoint, {
+      method: "GET",
+      headers: headers,
+    });
+
+    if (!response.ok) {
+      console.log(response.statusText);
+      throw new Error(
+        `Failed to retrieve access token: ${response.statusText}`
+      );
+    }
+
+    const data = await response.json();
+    console.log(data)
+    setUsers(data);
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+
+
+  },[])
+
 
   const handleDelete = (id) => {
     dispatch(deleteUser(id));
