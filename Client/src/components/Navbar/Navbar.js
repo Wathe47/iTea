@@ -26,7 +26,6 @@
   const Item = styled(Link)(({ theme }) => ({
     border: "0px solid",
     borderColor: mode === "dark" ? "#444d58" : "#ced7e0",
-    padding: theme.spacing(2),
     borderRadius: "0px",
     textAlign: "center",
     letterSpacing: "1px",
@@ -38,15 +37,21 @@
     alignItems: "center",
     transition: "color 0.3s", // Add color transition
     "&:hover": {
-      color: "gray", // Change text color on hover
+      color: "#94ba20", // Change text color on hover
     },
   }));
 
   const IconItem = styled(Item)(({ theme }) => ({
-    "&:hover .icon-text": {
-      opacity: 1, // Show text on hover
+    "&:hover": {
+      opacity: 1, 
+      color: "#94ba20",
+    },
+    "&:hover svg": { // Add hover effect for the svg icon
+      color: "#94ba20", // Change the color to green on hover
     },
   }));
+
+
 
   const DropdownContent = styled("div")(({ theme }) => ({
     display: "none",
@@ -97,30 +102,28 @@
     const [userDetails, setUserDetails] = useState();
 
     useEffect(() => {
-      const fetchData = async () => {
         if (state?.isAuthenticated) {
-          try {
-            const response = await getBasicUserInfo();
+          getBasicUserInfo()
+          .then((response) => {
             setUserDetails(response);
-          } catch (error) {
+            window.localStorage.setItem("user", JSON.stringify(response));
+          })
+          .catch((error) => {
             console.error("Failed to load response " + error);
-          }
+          });
         }
-      };
-      fetchData();
-    }, []);
+    }, [getBasicUserInfo]);
 
 
    const handleSignOut = () => {
-        signOut();
-        window.localStorage.clear();
-        navigate("/");
+    if(state?.isAuthenticated){
+      signOut();
+      window.localStorage.clear();
+      navigate("/");
+    }
+      window.location.reload();
     }
     
-      
-
-
-
     const toggleDropdown = () => {
       setIsDropdownOpen(!isDropdownOpen);
     };
@@ -141,9 +144,9 @@
     const renderComponentOrder = () => {
       switch (role) {
         case "ADMIN":
-          return "addproductdetails";
-        case "DELIVERY":
-          return "deliver-orders";
+          return "admin-orders";
+        case "MANUFACTURER":
+          return "seller-orders";
         default:
           return "user-orders";
       }
@@ -154,9 +157,9 @@
     const renderComponentExplore = () => {
       switch (role) {
         case "ADMIN":
-          return "manage-users";
-        case "DELIVERY":
-          return "explore-orders";
+          return "explore";
+        case "MANUFACTURER":
+          return "addproductdetails";
         default:
           return "explore";
       }
@@ -173,7 +176,7 @@
           justifyContent: "center", // Center vertically
           alignItems: "center", // Center horizontally
         }}
-        style={{ position: "fixed", top: "0", width: "100%" }} // Add width: "100%" to stretch across the screen
+        style={{  width: "100%" ,}} // Add width: "100%" to stretch across the screen
         className="navbar"
       >
         <div className="navBack"></div>
@@ -205,6 +208,7 @@
                   style={{
                     position: "relative",
                     top: "0px",
+                    left: "-100%",
                     overflow: "hidden",
                     width: "100%",
                     alignItems: "center",
@@ -214,16 +218,19 @@
                   <img
                     src="https://res.cloudinary.com/dl8dikngu/image/upload/v1707476098/ziltkvevsqnizaeizkp4.png"
                     alt="iTeaLogo"
-                    width="40%"
+                    width="70%"
+                    
                     style={{
                       objectFit: "cover",
                       position: "relative",
                       top: "0px",
+                      margin: "-5% 0% -10% 0%" 
                     }}
                   />
                 </div>
               </Link>
             </Grid>
+
             <Grid
               xs={2}
               sm={4}
@@ -232,15 +239,16 @@
                 display: "flex",
                 flexDirection: "column", // Change to column layout
                 justifyContent: "center", // Center vertically
-                alignItems: "center", // Center horizontally
+                alignItems: "right", // Center horizontally
               }}
-            >
-              <Item to={componentToRenderExplore}>
+              
+              >
+              <Item to={componentToRenderExplore} style={{ marginLeft: "10%"}}>
                 <ExploreIcon
-                  style={{ marginRight: "5px", color: "black", fontSize: "15px" }}
+                  style={{ marginRight: "5px", color: "black", fontSize: "25px" }}
                 />
                 <span className="icon-text">
-                  {role === "ADMIN" ? "USERS" : "EXPLORE"}
+                PRODUCTS
                 </span>
               </Item>
             </Grid>
@@ -257,10 +265,10 @@
             >
               <Item to={componentToRenderOrder}>
                 <ShoppingCartIcon
-                  style={{ marginRight: "5px", color: "black", fontSize: "15px" }}
+                  style={{ marginRight: "5px", color: "black", fontSize: "25px" }}
                 />
                 <span className="icon-text">
-                  {role === "ADMIN" ? "INVENTORY" : "ORDERS"}
+                  ORDERS
                 </span>
               </Item>
             </Grid>
@@ -281,7 +289,7 @@
                     style={{
                       marginRight: "5px",
                       color: "black",
-                      fontSize: "15px",
+                      fontSize: "25px",
                     }}
                   />
                   <span
@@ -293,13 +301,13 @@
                       : `${userDetails?.givenName} 's Profile`}
                   </span>
                   {!isDropdownOpen ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
-                  <DropdownContent className={isDropdownOpen ? "show" : ""}>
-                    {/* <Link to="profile" style={{ textDecoration: "none" }}>
+                  <DropdownContent className={isDropdownOpen ? "show" : ""} style={{ marginTop:"-65px", marginLeft:"50px", }}>
+                    <Link to="profile" style={{ textDecoration: "none" }}>
                       <DropdownItem>Profile</DropdownItem>
-                    </Link> */}
+                    </Link>
                     {role === "ADMIN" && (
-                      <Link to="admin-orders" style={{ textDecoration: "none" }}>
-                        <DropdownItem>Orders</DropdownItem>
+                      <Link to="manage-users" style={{ textDecoration: "none" }}>
+                        <DropdownItem>Manage Users</DropdownItem>
                       </Link>
                     )}
                     <DropdownItem onClick={handleSignOut}>Logout</DropdownItem>
@@ -308,7 +316,14 @@
               </ProfileContainer>
             </Grid>
           </Grid>
-        ) : (
+        ) : 
+        
+        
+        
+        
+        
+        
+        (
           <Grid
             container
             spacing={{ xs: 2, md: 3 }}
@@ -323,8 +338,9 @@
                   style={{
                     position: "relative",
                     top: "0px",
+                    left: "-100%",
                     overflow: "hidden",
-                    width: "100%",
+                    width: "70%",
                   }}
                 >
                   <img
@@ -353,9 +369,9 @@
             >
               <Item to="/explore">
                 <ExploreIcon
-                  style={{ marginRight: "5px", color: "black", fontSize: "15px" }}
+                  style={{ marginRight: "5px", color: "black", fontSize: "25px" }}
                 />
-                <span className="icon-text">EXPLORE</span>
+                <span className="icon-text">PRODUCTS</span>
               </Item>
             </Grid>
             <Grid
@@ -371,7 +387,7 @@
             >
               <Item to="/auth">
                 <LoginIcon
-                  style={{ marginRight: "5px", color: "black", fontSize: "15px" }}
+                  style={{ marginRight: "5px", color: "black", fontSize: "25px" }}
                 />
                 <span className="icon-text">SIGNUP/SIGNIN</span>
               </Item>{" "}
@@ -389,7 +405,7 @@
             >
               <Item to="/auth">
                 <InfoIcon
-                  style={{ marginRight: "5px", color: "black", fontSize: "15px" }}
+                  style={{ marginRight: "5px", color: "black", fontSize: "25px" }}
                 />
                 <span className="icon-text">INFO</span>
               </Item>

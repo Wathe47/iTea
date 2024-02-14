@@ -21,7 +21,7 @@ export const fetchOrders = () => async (dispatch) => {
 export const fetchOrderByEmail = (email) => async (dispatch) => {
   try {
     const { data } = await api.fetchOrderByEmail(email);
-    // console.log(data);
+    console.log(data);
     dispatch({ type: FETCH_ORDER_BY_EMAIL, payload: data });
   } catch (error) {
     console.log(error);

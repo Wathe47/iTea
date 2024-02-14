@@ -12,41 +12,19 @@ import "swiper/css/navigation";
 import Loading from "../Loading/Loading";
 import { fetchOrderBymanufacturerEmail } from "../../actions/order";
 import OrderCard from "./OrderCard";
+import { fetchOrders } from "../../actions/order";
 
 const AdminOrder = () => {
   const dispatch = useDispatch();
-
-
   const ordersData = useSelector((state) => state.order.orders);
-  const {state,getBasicUserInfo} = useAuthContext();
-  const[userDetails,setUserDetails] = useState(null);
-
-   
-  const userData = userDetails;
+  const {state} = useAuthContext();
+  const userData = window.localStorage.getItem("user");
+  const isSignup = state?.isAuthenticated;
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (state?.isAuthenticated) {
-        try {
-          const response = await getBasicUserInfo();
-          console.log(response?.email);
-          dispatch(fetchOrderBymanufacturerEmail(response?.email));
-          setUserDetails(response);
-        } catch (error) {
-          console.error("Failed to load response " + error);
-        }
-      }
-      
-    };
-    fetchData();
-    
+    dispatch(fetchOrders())
   }, []);
   
-    
-
-
-
-  const isSignup = state?.isAuthenticated;
 
   if (!ordersData[0]) {
     return <Loading text={"No Orders Found!"} />;
@@ -82,7 +60,7 @@ const AdminOrder = () => {
         alt="background"
         className="product--background"
       />
-      <div style={{ marginTop: "200px" }}>
+      <div style={{ marginTop: "100px" }}>
         <Grid container spacing={2}>
           <Grid
             item

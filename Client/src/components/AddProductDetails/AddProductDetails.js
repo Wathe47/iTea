@@ -22,7 +22,9 @@ import "./styles.css";
 
 const AddProductInfoForm = () => {
   const [errors, setErrors] = useState({});
-  const products = useSelector((state) => state.products);
+  const specificEmail = JSON.parse(window.localStorage.getItem("user")).email;
+  const  allProducts = useSelector((state) => state.products);
+  const products = allProducts.filter(product => product.manufacturerEmail === specificEmail);
 
   const [productData, setProductData] = useState({
     name: "",
@@ -123,9 +125,9 @@ const AddProductInfoForm = () => {
           size="small"
           onClick={clear}
           style={{
-            background: "black",
+            background: "#94ba20",
             borderRadius: "20px",
-            marginTop: "120px",
+            marginTop: "-30px",
             marginBottom: "-120px",
             marginLeft: "70%",
             color: "white",
@@ -145,9 +147,9 @@ const AddProductInfoForm = () => {
           alignItems: "center",
           width: "100%",
           paddingY: "50px",
-          mt: 20,
+          mt: 15,
         }}
-        style={{ background: "#ebebeb" }}
+        style={{ background: "#ebebeb", marginTop: "90px"}}
       >
         {products.map((product) => (
           <Card
@@ -155,7 +157,9 @@ const AddProductInfoForm = () => {
             style={{
               margin: "10px",
               maxWidth: "300px",
-              height: "400px",
+              height: "auto",
+              borderRadius: "10px",
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.5)",
             }}
           >
             <CardMedia
@@ -210,7 +214,7 @@ const AddProductInfoForm = () => {
               onClick={() => handleCardClick(product)}
               size="small"
               style={{
-                background: "black",
+                background: "#94ba20",
                 marginBottom: "0px",
                 color: "white",
                 fontSize: "small",
@@ -231,7 +235,7 @@ const AddProductInfoForm = () => {
                 marginBottom: "0px",
                 borderRadius: "0",
                 color: "white",
-                background: "rgb(138, 56, 56)",
+                background: "black",
                 fontSize: "small",
                 height: "50px",
               }}
@@ -257,6 +261,8 @@ const AddProductInfoForm = () => {
           variant="h6"
           style={{
             marginBottom: "20px",
+            fontWeight: "600",
+            fontSize: "30px",
           }}
         >
           {currentId ? "Add Details" : "Edit Products"}
@@ -316,7 +322,6 @@ const AddProductInfoForm = () => {
             />
             <TextField
               sx={{ my: 0.5 }}
-              multiline
               name="imageUrls"
               variant="outlined"
               label="ImageUrls"
@@ -331,6 +336,7 @@ const AddProductInfoForm = () => {
                     .filter((url) => url.trim() !== ""),
                 })
               }
+
             />
 
 
@@ -384,6 +390,7 @@ const AddProductInfoForm = () => {
               onFocus={() => {
                 setErrors({ ...errors, addQuantity: "" });
               }}
+              style={{ marginTop: "0px" }}
             />
           </form>
         </Paper>
@@ -395,9 +402,10 @@ const AddProductInfoForm = () => {
           onClick={handleSubmit}
           type="submit"
           style={{
-            background: "black",
+            background: "#94ba20",
             borderRadius: "20px",
-            marginTop: "10px",
+            border: "none",
+            marginTop: "-10px",
             color: "white",
             fontSize: "small",
           }}
@@ -413,8 +421,9 @@ const AddProductInfoForm = () => {
           style={{
             background: "white",
             borderRadius: "20px",
-            color: "black",
-            fontSize: "smaller",
+            marginTop: "-5px",
+            color: "#94ba20",
+            fontSize: "13px",
           }}
           fullWidth
         >

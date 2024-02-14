@@ -11,28 +11,8 @@ const AddProductForm = () => {
   
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-
-
   
-
-  const {state,getBasicUserInfo,signOut} = useAuthContext();
-  const [userDetails, setUserDetails] = useState();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (state?.isAuthenticated) {
-        try {
-          const response = await getBasicUserInfo();
-          setUserDetails(response);
-        } catch (error) {
-          console.error("Failed to load response " + error);
-        }
-      }
-    };
-    fetchData();
-  }, []);
-  
-  const user  = userDetails;
+  const user  = JSON.parse(window.localStorage.getItem("user"));
 
   const [productData, setProductData] = useState({
     name: "",
@@ -116,6 +96,8 @@ const AddProductForm = () => {
           variant="h6"
           style={{
             marginBottom: "20px",
+            fontWeight: "600",
+            fontSize: "30px",
           }}
         >
           {currentId ? "Edit the Product" : "Add a Product"}
@@ -213,8 +195,9 @@ const AddProductForm = () => {
           size="large"
           type="submit"
           style={{
-            background: "black",
+            background: "#94ba20",
             borderRadius: "20px",
+            border: "none",
             marginTop: "30px",
             color: "white",
             fontSize: "small",
@@ -231,7 +214,7 @@ const AddProductForm = () => {
           style={{
             background: "white",
             borderRadius: "20px",
-            color: "black",
+            color: "#94ba20",
             fontSize: "small",
           }}
           fullWidth

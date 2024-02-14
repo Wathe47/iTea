@@ -1,8 +1,7 @@
-import React, { useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import { useAuthContext } from "@asgardeo/auth-react";
-
 import "./styles.css";
 
 import "swiper/css";
@@ -11,28 +10,29 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import Loading from "../Loading/Loading";
-import { fetchOrderByEmail } from "../../actions/order";
+import { fetchOrderBymanufacturerEmail } from "../../actions/order";
 import OrderCard from "./OrderCard";
 
-const UserOrder = () => {
+const SellerOrder = () => {
   const dispatch = useDispatch();
 
-  
-  const ordersData = useSelector((state) => state.order.orders);
 
+  const ordersData = useSelector((state) => state.order.orders);
   const {state} = useAuthContext();
 
-    const userData = JSON.parse(window.localStorage.getItem("user"));
-    const email = userData?.email;
-    console.log(email);
+   
+  const userData = JSON.parse(window.localStorage.getItem("user"));
+
   useEffect(() => {
-    dispatch(fetchOrderByEmail(email));
-  }, [dispatch, email]);
+    console.log(userData?.email)
+    dispatch(fetchOrderBymanufacturerEmail(userData?.email));
+  }, []);
+  
 
   const isSignup = state?.isAuthenticated;
 
   if (!ordersData[0]) {
-    return <Loading />;
+    return <Loading text={"No Orders Found!"} />;
   }
   if (!isSignup) {
     return (
@@ -83,25 +83,13 @@ const UserOrder = () => {
                   userId={userData.userid}
                   productId={order.productId}
                   productName={order.productName}
-                  unitPrice={order.unitPrice}
                   customerEmail={order.customerEmail}
+                  unitPrice={order.unitPrice}
                   totalPrice={order.totalPrice}
                   quantity={order.quantity}
-                  deliveryPerson={order.deliveryPerson}
-                  address={order.address}
-                  deliveryPersonId={order.deliveryPersonId}
-                  orderDate={order.orderDate}
                   cancelled={order.cancelled}
                   userRole={userData.applicationRoles}
-                  deliveryApproved={order.deliveryApproved}
-                  approvalDate={order.approvalDate}
-                  packedDate={order.packedDate}
-                  deliveryStartDate={order.deliveryStartDate}
-                  approved={order.approved}
-                  packed={order.packed}
-                  delivered={order.delivered}
-                  deliveryStart={order.deliveryStart}
-                  deliveredDate={order.deliveredDate}
+
                 />
               </Grid>
             ))}
@@ -112,4 +100,4 @@ const UserOrder = () => {
   );
 };
 
-export default UserOrder;
+export default SellerOrder;

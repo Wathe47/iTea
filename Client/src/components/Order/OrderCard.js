@@ -99,7 +99,7 @@ const OrderCard = ({
             </Typography>
             <Button
               style={{
-                background: "grey",
+                background: "#94ba20",
                 color: "white",
                 fontSize: "10px",
                 marginTop: "10px",
@@ -121,8 +121,8 @@ const OrderCard = ({
       </CardContent>
       <CardActions>
 
-        {userRole === "USER" && !packed && !cancelled && (
-          <Button size="small" onClick={handleEditClick}>
+        {userRole === "USER" &&  (
+          <Button size="small" onClick={handleEditClick} style={{marginLeft:"5px", marginTop:"-15px"}} >
             Edit
           </Button>
         )}

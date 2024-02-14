@@ -7,6 +7,7 @@ import Loading from "../Loading/Loading";
 import ProductList from "./Explore"; // Ensure this import path matches your file structure
 import { addOrder } from "../../actions/order";
 import "./styles.css";
+import { useAuthContext } from "@asgardeo/auth-react";
 
 const initialState = {
   manufacturerEmail: "",
@@ -15,7 +16,6 @@ const initialState = {
   productId: null,
   unitPrice: null,
   totalPrice: null,
-  orderDate: null,
   productName: "",
   address: "",
 };
@@ -23,7 +23,8 @@ const initialState = {
 const ImageCarousel = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const userData = useSelector((state) => state.auth.authData);
+  const userData = JSON.parse(window.localStorage.getItem("user"));
+  const {state,getBasicUserInfo} = useAuthContext();
   const product = useSelector((state) => state.singleProduct);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [formData, setFormData] = useState(initialState);
@@ -44,10 +45,8 @@ const ImageCarousel = () => {
       manufacturerEmail:product.manufacturerEmail,
       productId: product.id,
       customerEmail: userData.email,
-      address: userData.address,
       unitPrice: product.price,
       totalPrice: product.price * quantity,
-      orderDate: currentDate,
       productName: product.name,
       quantity: quantity,
     });
@@ -55,6 +54,7 @@ const ImageCarousel = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     dispatch(addOrder(formData));
   };
 
@@ -75,28 +75,37 @@ const ImageCarousel = () => {
               src={product.imageUrls[currentImageIndex]}
               alt={product.name}
               className="product-image"
+              style={{ width: "100%", height: "100%" ,marginLeft:"10%"}}
             />
             <Button onClick={prevImage}>Prev</Button>
             <Button onClick={nextImage}>Next</Button>
           </div>
         </Grid>
         <Grid item xs={12} md={6} lg={6}>
-          <Typography variant="h5">{product.name}</Typography>
+          <div style={{marginTop:"-10%", textAlign:"left", marginLeft:"25%"}}>
+          <Typography variant="h4">{product.name}</Typography>
           <Typography variant="body1">{product.description}</Typography>
-          <Typography variant="body2">Available Quantity: {product.quantity}</Typography>
+          <div style={{height:"80px"}}></div>
           <Typography variant="h6">LKR {product.price}.00</Typography>
-          <form onSubmit={handleSubmit}>
-            {userData ? (
+          <Typography variant="body2">Available Quantity: {product.quantity}</Typography>
+
+          </div>
+
+          <form onSubmit={handleSubmit} style={{marginTop:"20px"}}>
+            {state?.isAuthenticated ? (
               <>
                 <TextField
                   name="quantity"
-                  label="Quantity"
+                  placeholder="Quantity"
                   type="number"
                   onChange={handleChange}
                   variant="outlined"
                   required
+                  InputProps={{
+                    style: { height: "40px", width:"120px" } // Adjust the height as needed
+                  }}
                 />
-                <Button type="submit" variant="contained" color="primary">
+                <Button type="submit" variant="contained" color="primary" style={{marginLeft:"5%", backgroundColor:"#94ba20" }}>
                   Add Order
                 </Button>
               </>
@@ -107,7 +116,7 @@ const ImageCarousel = () => {
         </Grid>
       </Grid>
 
-      <Typography variant="h4" style={{ textAlign: "center", marginTop: "2rem" }}>
+      <Typography variant="h4" style={{ textAlign: "center", marginTop: "10%",marginBottom:"-8% " }}>
         Explore More
       </Typography>
       <ProductList />

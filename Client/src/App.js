@@ -11,6 +11,7 @@ import ExploreProduct from "./components/Explore/ExploreProduct";
 import Users from "./components/Auth/Users";
 import AdminOrder from "./components/Order/AdminOrder";
 import UserOrder from "./components/Order/UserOrder";
+import SellerOrder from "./components/Order/SellerOrder";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/addProductDetails" element={<AddProductInfoForm />} />
           <Route path="/manage-users" element={<Users />} />
           <Route path="/admin-orders" element={<AdminOrder />} />
+          <Route path="/seller-orders" element={<SellerOrder />} />
           <Route path="/user-orders" element={<UserOrder />} />
         </Routes>
       </Router>

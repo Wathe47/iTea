@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Grid, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../actions/product";
 import styled from "@mui/system/styled";
@@ -8,6 +7,36 @@ import "./style.css";
 import Loading from "../Loading/Loading";
 import { useAuthContext } from "@asgardeo/auth-react";
 import { getToken } from "../Auth/getToken";
+
+
+import { Button, Container, Card, CardContent, CardMedia, Typography, Grid, Pagination } from "@mui/material";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
+
+  
+
+const Home = () => {
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products);
+  console.log(products)
+  const {state, getBasicUserInfo} = useAuthContext();
+  const [userDetails, setUserDetails] = useState(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 16; // Constant value for items per page
+
+
+  const count = Math.ceil(products.length / itemsPerPage);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
 const Item = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -18,14 +47,6 @@ const Item = styled("div")(({ theme }) => ({
   height: "10px",
   textAlign: "center",
 }));
-
-const Home = () => {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
-  console.log(products)
-  const {state, getBasicUserInfo} = useAuthContext();
-  const [userDetails, setUserDetails] = useState(null);
-
 
   const [activeSlide, setActiveSlide] = useState(0); // New state for active slide index
 
@@ -51,50 +72,112 @@ const Home = () => {
   }, [dispatch]);
 
 
-  // Function to navigate to the next slide
-  const nextSlide = () => {
-    setActiveSlide((prevActiveSlide) => 
-      prevActiveSlide >= products.length - 1 ? 0 : prevActiveSlide + 1
-    );
-  };
 
-  // Function to navigate to the previous slide
-  const prevSlide = () => {
-    setActiveSlide((prevActiveSlide) => 
-      prevActiveSlide <= 0 ? products.length - 1 : prevActiveSlide - 1
-    );
-  };
 
   if (!products.length) {
     return <Loading />;
   }
 
   return (
-    <Container maxWidth="100%" style={{ marginTop: "150px" }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <div className="slider-container">
-            {products.map((item, index) => (
-              <div
-                key={item.id}
-                className={`slide ${index === activeSlide ? "active" : ""}`}
-                style={{ display: index === activeSlide ? "block" : "none" }}
-              >
-                <Link to={`/explore/${item.id}`} style={{ textDecoration: "none" }}>
-                  <img src={item.imageUrls[0]} alt={item.name} />
-                  <Typography variant="body2" className="slide-title" color="white">
-                    {item.name}
+    <div>
+<div style={{ backgroundImage: `url('https://res.cloudinary.com/dl8dikngu/image/upload/v1707877727/qmvqaazkjcq3tijo2lh6.webp')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <Container maxWidth="xl" style={{ minHeight: '100vh', display: 'flex', alignItems: 'left', justifyContent: 'space-between' }}>
+        <div style={{ marginLeft: '50px', width:"30%" }}>
+          
+          <Typography variant="h4" gutterBottom style={{marginBottom:"10%", marginTop:"20%"}}>
+            Welcome to iTea 
+          </Typography>
+          <Typography variant="body1" paragraph style={{marginBottom:"5%"}}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel metus quis velit bibendum tristique vel nec arcu. Integer volutpat tellus quis orci consequat, ac aliquam nunc ultrices. Curabitur malesuada sit amet risus nec suscipit. 
+          </Typography>
+          <Button variant="contained" style={{ backgroundColor: "#94ba20", color: "white",marginTop:"15%" }}>
+          Sign Up
+        </Button>
+
+        </div>
+        <div>
+          {/* Your slider component here */}
+        </div>
+      </Container>
+    </div>
+    <div className="product-list-container">
+    <Grid container spacing={3} justifyContent="center">
+      {currentItems.map((product) => (
+        <Grid item key={product.id} xs={6} sm={4} md={3} lg={3}>
+          <Card sx={{ marginBottom: 2 }} elevation={0} className="explore--card" style={{boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)"}}>
+            <Link to={`/explore/${product.id}`} style={{ textDecoration: "none" }}>
+              <CardMedia
+                component="img"
+                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                image={product.imageUrls[0]}
+                alt={product.name}
+              />
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  variant="h7"
+                  component="div"
+                  style={{
+                    color: "black",
+                    fontWeight: "600",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                  className="explore--card--name"
+                >
+                  {product.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  style={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                  className="explore--card--details"
+                >
+                  {product.description}
+                  <br />
+                  <Typography
+                    variant="h7"
+                    style={{ fontWeight: "600" }}
+                    className="explore--card--price"
+                  >
+                    LKR {product.price}.00
                   </Typography>
-                </Link>
-              </div>
-            ))}
-            <Button className="prev" onClick={prevSlide}>Prev</Button>
-            <Button className="next" onClick={nextSlide}>Next</Button>
-          </div>
+                </Typography>
+                <BottomNavigation showLabels style={{ backgroundColor: "transparent" }}>
+                  <Link to="/">
+                    <BottomNavigationAction
+                      label="Add to Cart"
+                      icon={<ShoppingCartIcon />}
+                      style={{ color: "black" }}
+                    />
+                  </Link>
+                </BottomNavigation>
+              </CardContent>
+            </Link>
+          </Card>
         </Grid>
-      </Grid>
-    </Container>
+      ))}
+    </Grid>
+    <div className="pagination">
+      <Pagination
+        count={count}
+        page={currentPage}
+        onChange={handlePageChange}
+        variant="outlined"
+        shape="rounded"
+      />
+    </div>
+  </div>
+  </div>
   );
 };
 
 export default Home;
+
+
+
