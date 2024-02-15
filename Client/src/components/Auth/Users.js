@@ -5,7 +5,6 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
-import { deleteUser, fetchUsers } from "../../actions/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Loading from "../Loading/Loading";
@@ -82,7 +81,7 @@ const Users = () => {
 
 
   const handleDelete = (id) => {
-    dispatch(deleteUser(id));
+   console.log('delete user called')
   };
 
   if (!users) {

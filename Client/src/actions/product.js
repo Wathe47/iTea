@@ -39,15 +39,7 @@ export const deleteProduct = (id) => async (dispatch) => {
   }
 };
 
-export const likeProduct = (id) => async (dispatch) => {
-  try {
-    const { data } = await api.likeProduct(id);
 
-    dispatch({ type: "LIKE", payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 export const addProduct = (productData) => async (dispatch) => {
   try {
@@ -59,14 +51,7 @@ export const addProduct = (productData) => async (dispatch) => {
   }
 };
 
-export const updateProduct = (id, updatedProductData) => async (dispatch) => {
-  try {
-    const { data } = await api.updateProduct(id, updatedProductData);
-    dispatch({ type: UPDATE_PRODUCT, payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 export const updateDetails = (id, updatedProductData) => async (dispatch) => {
   try {
@@ -77,11 +62,3 @@ export const updateDetails = (id, updatedProductData) => async (dispatch) => {
   }
 };
 
-export const addDiscount = (id, discountData) => async (dispatch) => {
-  try {
-    const { data } = await api.addDiscount(id, discountData);
-    dispatch({ type: ADD_DISCOUNT, payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};

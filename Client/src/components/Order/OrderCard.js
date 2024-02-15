@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import EditOrder from "./EditOrder"; // Import the EditOrder component
-import { updateOrder } from "../../actions/order";
+
 
 const OrderCard = ({
   id,
@@ -19,24 +19,14 @@ const OrderCard = ({
   cancelled,
   address,
   userRole,
-  packed,
+
 
 }) => {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.auth.authData);
 
-  const currentOrder = {
-    id,
-    productId,
-    productName,
-    unitPrice,
-    customerEmail,
-    totalPrice,
-    quantity,
-    cancelled,
 
-  };
 
 
 

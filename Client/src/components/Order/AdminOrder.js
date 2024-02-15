@@ -82,7 +82,6 @@ const AdminOrder = () => {
                   unitPrice={order.unitPrice}
                   totalPrice={order.totalPrice}
                   quantity={order.quantity}
-                  cancelled={order.cancelled}
                   userRole={userData.applicationRoles}
 
                 />

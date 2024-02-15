@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField, Button, Typography, Paper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
-import { addProduct, updateProduct } from "../../actions/product";
+import { addProduct } from "../../actions/product";
 import { validateProductForm } from "../../validation/formValidation";
 import { useAuthContext } from "@asgardeo/auth-react";
 
@@ -46,11 +46,8 @@ const AddProductForm = () => {
       return;
     }
 
-    if (currentId) {
-      dispatch(updateProduct(currentId, productData));
-    } else {
       dispatch(addProduct(productData));
-    }
+
 
     navigate("/addProductDetails");
     clear();

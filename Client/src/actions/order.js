@@ -70,11 +70,4 @@ export const updateOrder = (id, updatedOrderData) => async (dispatch) => {
   }
 };
 
-// export const updateDetails = (id, updatedProductData) => async (dispatch) => {
-//   try {
-//     const { data } = await api.updateDetails(id, updatedProductData);
-//     dispatch({ type: UPDATE_ORDER, payload: data });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+

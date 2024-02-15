@@ -18,8 +18,7 @@
   import { Link, useNavigate } from "react-router-dom";
 
   import "./styles.css";
-  import { signin } from "../../actions/auth";
-  import useUserInfo from "../Auth/getUserInfo";
+
 
   const mode = "light"; // Replace with your desired mode (either "dark" or "light")
 

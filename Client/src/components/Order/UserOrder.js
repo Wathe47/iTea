@@ -1,4 +1,4 @@
-import React, { useEffect,useState} from "react";
+import React, { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import { useAuthContext } from "@asgardeo/auth-react";
@@ -87,21 +87,7 @@ const UserOrder = () => {
                   customerEmail={order.customerEmail}
                   totalPrice={order.totalPrice}
                   quantity={order.quantity}
-                  deliveryPerson={order.deliveryPerson}
-                  address={order.address}
-                  deliveryPersonId={order.deliveryPersonId}
-                  orderDate={order.orderDate}
-                  cancelled={order.cancelled}
                   userRole={userData.applicationRoles}
-                  deliveryApproved={order.deliveryApproved}
-                  approvalDate={order.approvalDate}
-                  packedDate={order.packedDate}
-                  deliveryStartDate={order.deliveryStartDate}
-                  approved={order.approved}
-                  packed={order.packed}
-                  delivered={order.delivered}
-                  deliveryStart={order.deliveryStart}
-                  deliveredDate={order.deliveredDate}
                 />
               </Grid>
             ))}
