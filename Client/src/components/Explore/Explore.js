@@ -35,15 +35,15 @@ const ProductList = () => {
   }
 
   return (
-    <div className="product-list-container">
+    <div className="product-list-container" style={{ background: "#ebebeb", marginTop: "90px", padding:"20px"}}>
       <Grid container spacing={3} justifyContent="center">
         {currentItems.map((product) => (
           <Grid item key={product.id} xs={6} sm={4} md={3} lg={3}>
-            <Card sx={{ marginBottom: 2 }} elevation={0} className="explore--card" style={{boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)"}}>
+            <Card sx={{ marginBottom: 2 }} elevation={0} className="explore--card" style={{boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)", borderRadius:"10px"}}>
               <Link to={`/explore/${product.id}`} style={{ textDecoration: "none" }}>
                 <CardMedia
                   component="img"
-                  style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                  style={{ objectFit: "cover", width: "100%", height: "200px"}}
                   image={product.imageUrls[0]}
                   alt={product.name}
                 />
@@ -84,7 +84,7 @@ const ProductList = () => {
                     </Typography>
                   </Typography>
                   <BottomNavigation showLabels style={{ backgroundColor: "transparent" }}>
-                    <Link to="/">
+                    <Link to="/home">
                       <BottomNavigationAction
                         label="Add to Cart"
                         icon={<ShoppingCartIcon />}

@@ -118,7 +118,7 @@
     if(state?.isAuthenticated){
       signOut();
       window.localStorage.clear();
-      navigate("/");
+      navigate("/home");
     }
       window.location.reload();
     }
@@ -202,7 +202,7 @@
                 alignItems: "center", // Center horizontally
               }}
             >
-              <Link to='/'>
+              <Link to='/home'>
                 <div
                   style={{
                     position: "relative",
@@ -332,7 +332,7 @@
               <Item></Item>
             </Grid>
             <Grid xs={2} sm={4}>
-              <Link to="/">
+              <Link to="/home">
                 <div
                   style={{
                     position: "relative",

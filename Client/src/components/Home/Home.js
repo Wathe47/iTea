@@ -108,7 +108,7 @@ const Item = styled("div")(({ theme }) => ({
             <Link to={`/explore/${product.id}`} style={{ textDecoration: "none" }}>
               <CardMedia
                 component="img"
-                style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                style={{ objectFit: "cover", width: "100%", height: "200px" }}
                 image={product.imageUrls[0]}
                 alt={product.name}
               />
@@ -149,7 +149,7 @@ const Item = styled("div")(({ theme }) => ({
                   </Typography>
                 </Typography>
                 <BottomNavigation showLabels style={{ backgroundColor: "transparent" }}>
-                  <Link to="/">
+                  <Link to="/home">
                     <BottomNavigationAction
                       label="Add to Cart"
                       icon={<ShoppingCartIcon />}
