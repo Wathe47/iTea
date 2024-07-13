@@ -1,13 +1,10 @@
 import axios from "axios";
 
+const inventoryBaseURL = "http://localhost:9001";
+const orderBaseURL = "http://localhost:9002";
 
-// const inventoryBaseURL = "http://localhost:8081";
-// const orderBaseURL = "http://localhost:8082";
-
-
-const inventoryBaseURL = "https://29d211f9-7555-4ba3-ae92-5b0843a2a665-dev.e1-us-east-azure.choreoapis.dev/gdwj/inventory/restservice-8081-c5d/v1";
-const orderBaseURL = "https://29d211f9-7555-4ba3-ae92-5b0843a2a665-dev.e1-us-east-azure.choreoapis.dev/gdwj/order/restservice-8082-745/v1";
-
+// const inventoryBaseURL = "https://29d211f9-7555-4ba3-ae92-5b0843a2a665-dev.e1-us-east-azure.choreoapis.dev/gdwj/inventory/restservice-8081-c5d/v1";
+// const orderBaseURL = "https://29d211f9-7555-4ba3-ae92-5b0843a2a665-dev.e1-us-east-azure.choreoapis.dev/gdwj/order/restservice-8082-745/v1";
 
 const inventoryAPI = axios.create({
   baseURL: inventoryBaseURL,

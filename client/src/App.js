@@ -20,7 +20,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route exact path="/home" element={<Home />} />
+          <Route exact path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route exact path="/explore" element={<Explore />} />
           <Route path="/addProduct" element={<AddProductForm />} />

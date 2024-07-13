@@ -43,9 +43,6 @@ public class InventoryController {
         inventoryService.updateInventory(inventoryId, inventory.getName(), inventory.getPrice(), String.valueOf(inventory.getQuantity()), inventory.getImageUrls());
     }
 
-
-
-
     //Ordering Process
 
     @PostMapping("/add-new-order")
