@@ -1,17 +1,53 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { MantineProvider } from "@mantine/core"; // Import MantineProvider
+import { Provider } from "react-redux";
+import { AuthProvider } from "@asgardeo/auth-react";
+import store from "./app/store";
+import "./index.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import App from "./App";
+
+const root = createRoot(document.getElementById("root"));
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  <AuthProvider
+
+  config={ {
+   signInRedirectURL: "http://localhost:3000",
+   signOutRedirectURL: "http://localhost:3000",
+   clientID: "Q8zPt1tx2UrNsmSU2YfuLLTVpCga",
+   baseUrl: "https://api.asgardeo.io/t/orgwathsalya",
+   scope: ["openid", "email", "groups", "profile", "roles" ]
+} }
+
+   //  config={ {
+   //    signInRedirectURL: "http://localhost:3000",
+   //    signOutRedirectURL: "http://localhost:3000",
+   //    clientID: "jweDabmkfrTPx2oQaSgEBijWQXUa",
+   //    baseUrl: "https://api.asgardeo.io/t/wathsalyagamage",
+   //    scope: [ 'openid', 'address', 'app_roles', 'email', 'groups', 'phone' ,'profile' ]
+   //  } }
+
+   //  config={ {
+   //      signInRedirectURL: "https://19ac2634-123c-44fa-b45a-0cb06cdb56b2.e1-us-east-azure.choreoapps.dev",
+   //      signOutRedirectURL: "https://19ac2634-123c-44fa-b45a-0cb06cdb56b2.e1-us-east-azure.choreoapps.dev",
+   //      clientID: "jweDabmkfrTPx2oQaSgEBijWQXUa",
+   //      baseUrl: "https://api.asgardeo.io/t/wathsalyagamage",
+   //      scope: [ 'openid', 'address', 'app_roles', 'email', 'groups', 'phone' ,'profile' ]
+   //  } }
+
+
+    >
+      <Provider store={store}>
+    <MantineProvider>
+
+      <App />
+
+    </MantineProvider>
+  </Provider>
+    </AuthProvider>
+
+
+);
