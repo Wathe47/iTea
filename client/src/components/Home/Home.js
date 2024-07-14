@@ -7,7 +7,8 @@ import "./style.css";
 import Loading from "../Loading/Loading";
 import { useAuthContext } from "@asgardeo/auth-react";
 
-import { Button, Container, Card, CardContent, CardMedia, Typography, Grid, Pagination, Box, RadioGroup, FormControl, FormLabel, Paper, FormControlLabel } from "@mui/material";
+import { Button, Container, Card, CardContent, CardMedia, Typography, Grid, Pagination, Box, RadioGroup, FormControl, FormLabel, Paper, FormControlLabel, BottomNavigation, BottomNavigationAction } from "@mui/material";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
 
 
 const Home = () => {
@@ -15,6 +16,19 @@ const Home = () => {
    const products = useSelector((state) => state.products);
    const { state, getBasicUserInfo } = useAuthContext();
    const [userDetails, setUserDetails] = useState(null);
+   const [currentPage, setCurrentPage] = useState(1);
+   const itemsPerPage = 16; 
+ 
+ 
+   const count = Math.ceil(products.length / itemsPerPage);
+ 
+   const indexOfLastItem = currentPage * itemsPerPage;
+   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+   const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+ 
+   const handlePageChange = (event, value) => {
+     setCurrentPage(value);
+   };
 
    const Item = styled("div")(({ theme }) => ({
       backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -49,28 +63,24 @@ const Home = () => {
 
 
    useEffect(() => {
-      console.log("hi")
-
       if (state?.isAuthenticated) {
          getBasicUserInfo()
             .then((response) => {
-               console.log(response);
                setUserDetails(response);
-
             })
             .catch((error) => {
                console.error("Failed to load response " + error);
             })
       }
-   }, []);
+   }, [state]);
 
    useEffect(() => {
       dispatch(fetchProducts());
    }, [dispatch]);
 
-   const welcomeNote = state?.isAuthenticated ? (
+   const welcomeNote = userDetails?.givenName ? (
       <Typography variant="h4" gutterBottom style={{ marginBottom: "10%", marginTop: "20%", fontFamily: "poppins", fontSize: '60px', fontWeight: "bold", textShadow: "4px 4px 25px grey" }}>
-         Welcome back, <span style={{ fontSize: "60px" }}> {userDetails?.displayName}! </span>
+         Welcome back, <span style={{ fontSize: "60px" }}> {userDetails.givenName}! </span>
       </Typography>
    ) : (
       <Typography variant="h4" gutterBottom style={{ marginBottom: "10%", marginTop: "20%", fontFamily: "poppins", fontSize: '60px', fontWeight: "bold", textShadow: "4px 4px 25px grey" }}>
@@ -131,79 +141,79 @@ const Home = () => {
             </Grid>
          </Box>
 
-         {/* <div className="product-list-container">
-            <Grid container spacing={3} justifyContent="center">
-               {currentItems.map((product) => (
-                  <Grid item key={product.id} xs={6} sm={4} md={3} lg={3}>
-                     <Card sx={{ marginBottom: 2 }} elevation={0} className="explore--card" style={{ boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)" }}>
-                        <Link to={`/explore/${product.id}`} style={{ textDecoration: "none" }}>
-                           <CardMedia
-                              component="img"
-                              style={{ objectFit: "cover", width: "100%", height: "200px" }}
-                              image={product.imageUrls[0]}
-                              alt={product.name}
-                           />
-                           <CardContent>
-                              <Typography
-                                 gutterBottom
-                                 variant="h7"
-                                 component="div"
-                                 style={{
-                                    color: "black",
-                                    fontWeight: "600",
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                 }}
-                                 className="explore--card--name"
-                              >
-                                 {product.name}
-                              </Typography>
-                              <Typography
-                                 variant="body2"
-                                 color="text.secondary"
-                                 style={{
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                 }}
-                                 className="explore--card--details"
-                              >
-                                 {product.description}
-                                 <br />
-                                 <Typography
-                                    variant="h7"
-                                    style={{ fontWeight: "600" }}
-                                    className="explore--card--price"
-                                 >
-                                    LKR {product.price}.00
-                                 </Typography>
-                              </Typography>
-                              <BottomNavigation showLabels style={{ backgroundColor: "transparent" }}>
-                                 <Link to="/home">
-                                    <BottomNavigationAction
-                                       label="Add to Cart"
-                                       icon={<ShoppingCartIcon />}
-                                       style={{ color: "black" }}
-                                    />
-                                 </Link>
-                              </BottomNavigation>
-                           </CardContent>
-                        </Link>
-                     </Card>
-                  </Grid>
-               ))}
-            </Grid>
-            <div className="pagination">
-               <Pagination
-                  count={count}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  variant="outlined"
-                  shape="rounded"
-               />
-            </div>
-         </div> */}
+         <div className="product-list-container" style={{ background: "#ebebeb", margin: "40px auto", padding:"20px", width:'90%'}}>
+      <Grid container spacing={3} justifyContent="space-around" sx={{margin:"10px"}}  >
+        {currentItems.map((product) => (
+          <Grid item key={product.id} xs={6} sm={4} md={3} lg={3}>
+            <Card sx={{ marginBottom: 5 }} elevation={0} className="explore--card" style={{boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)", borderRadius:"15px",width:"350px"}}>
+              <Link to={`/explore/${product.id}`} style={{ textDecoration: "none" }}>
+                <CardMedia
+                  component="img"
+                  style={{ objectFit: "cover", width: "100%", height: "200px"}}
+                  image={product.imageUrls[0]}
+                  alt={product.name}
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="h7"
+                    component="div"
+                    style={{
+                      color: "black",
+                      fontWeight: "600",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                    className="explore--card--name"
+                  >
+                    {product.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    style={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                    className="explore--card--details"
+                  >
+                    {product.description}
+                    <br />
+                    <Typography
+                      variant="h6"
+                      style={{ fontWeight: "600" }}
+                      className="explore--card--price"
+                    >
+                      LKR {product.price}.00
+                    </Typography>
+                  </Typography>
+                  <BottomNavigation showLabels style={{ backgroundColor: "transparent" }}>
+                    <Link to="/home">
+                      <BottomNavigationAction
+                        label="Add to Cart"
+                        icon={<ShoppingCart />}
+                        style={{ color: "black" }}
+                      />
+                    </Link>
+                  </BottomNavigation>
+                </CardContent>
+              </Link>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+      <div className="pagination">
+        <Pagination
+          count={count}
+          page={currentPage}
+          onChange={handlePageChange}
+          variant="outlined"
+          shape="rounded"
+        />
+      </div>
+    </div>
       </div>
    );
 };

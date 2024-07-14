@@ -15,6 +15,7 @@ import {
      console.log(error);
    }
  };
+
  export const fetchProductById = (id) => async (dispatch) => {
    try {
      const { data } = await api.fetchProductById(id);
@@ -42,7 +43,6 @@ import {
  export const addProduct = (productData) => async (dispatch) => {
    try {
      const { data } = await api.addProduct(productData);
-     console.log(JSON.stringify(data).length);
      dispatch({ type: CREATE_PRODUCT, payload: data });
    } catch (error) {
      console.log(error);
@@ -55,6 +55,7 @@ import {
    try {
      const { data } = await api.updateDetails(id, updatedProductData);
      dispatch({ type: UPDATE_PRODUCT, payload: data });
+     return data;
    } catch (error) {
      console.log(error);
    }

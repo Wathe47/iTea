@@ -9,6 +9,9 @@ import {
    Card,
    CardMedia,
    CardContent,
+   Collapse,
+   Alert,
+   IconButton,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -19,12 +22,14 @@ import {
 import { Link } from "react-router-dom";
 
 import "./styles.css";
+import { CloseIcon } from "@mantine/core";
 
 const AddProductInfoForm = () => {
    const [errors, setErrors] = useState({});
    const specificEmail = JSON.parse(window.localStorage.getItem("user")).email;
    const allProducts = useSelector((state) => state.products);
    const products = allProducts.filter(product => product.manufacturerEmail === specificEmail);
+   const [showAlert, setShowAlert] = useState(false);
 
    const [productData, setProductData] = useState({
       name: "",
@@ -74,6 +79,7 @@ const AddProductInfoForm = () => {
          updateDetails(currentId, { ...productData, quantity: newQuantity })
       );
       clear();
+
    };
 
    const clear = () => {
@@ -85,6 +91,8 @@ const AddProductInfoForm = () => {
          quantity: "",
          addQuantity: "",
       });
+
+      setShowAlert(true);
    };
 
    const handleCardClick = (clickedProduct) => {
@@ -92,7 +100,7 @@ const AddProductInfoForm = () => {
          name: clickedProduct.name,
          price: clickedProduct.price,
          description: clickedProduct.description,
-         imageUrls: clickedProduct.imageUrls, // Populate imageUrls correctly
+         imageUrls: clickedProduct.imageUrls, 
          quantity: clickedProduct.quantity,
       });
 
@@ -106,7 +114,7 @@ const AddProductInfoForm = () => {
    };
 
    const addImageURL = () => {
-      const newImageURL = prompt("Enter a new image URL"); // You can use a better UI for this
+      const newImageURL = prompt("Enter a new image URL"); 
       if (newImageURL) {
          setProductData((prevData) => ({
             ...prevData,
@@ -114,6 +122,17 @@ const AddProductInfoForm = () => {
          }));
       }
    };
+
+   useEffect(() => {
+      if (showAlert) {
+         const timer = setTimeout(() => {
+            setShowAlert(false);
+         }, 5000);
+         return () => clearTimeout(timer); 
+      }
+   }, [showAlert]);
+
+   console.log(showAlert);
 
    return (
       <Container maxWidth>
@@ -154,7 +173,7 @@ const AddProductInfoForm = () => {
                   No products found.
                </Typography>
             )}
-                  
+
          </Box>
          <Link to="/addproduct" style={{ color: "whitbacle" }}>
             <Button
@@ -177,11 +196,16 @@ const AddProductInfoForm = () => {
 
             </Button>
          </Link>
+         {showAlert && (<Box sx={{ width: '100%', marginTop: '40px' }}>
+            <Alert sx={{ mb: 2, width: '40%', margin: 'auto', padding: '0', marginTop: '20px', fontSize: '18px', }}>
+               Product has been added successfully!
+            </Alert>
+         </Box>)}
          <Box
             sx={{
                display: 'grid',
                gridTemplateColumns: 'repeat(4, 1fr)',
-               gap: '80px', 
+               gap: '80px',
                width: '90%',
                padding: '50px',
                paddingLeft: '80px',
