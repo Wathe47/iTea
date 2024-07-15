@@ -21,6 +21,14 @@ root.render(
          baseUrl: "https://api.asgardeo.io/t/orgwathsalya",
          scope: ["openid", "email", "groups", "profile", "roles"]
       }}
+
+   // config={{
+   //    signInRedirectURL: "http://localhost:3000/",
+   //    signOutRedirectURL: "http://localhost:3000/",
+   //    clientID: "Q8zPt1tx2UrNsmSU2YfuLLTVpCga",
+   //    baseUrl: "https://api.asgardeo.io/t/orgwathsalya",
+   //    scope: ["openid", "email", "groups", "profile", "roles"]
+   // }}
    >
 
       <Provider store={store}>
