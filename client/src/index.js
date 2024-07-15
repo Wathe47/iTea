@@ -14,6 +14,7 @@ root.render(
 
    <AuthProvider
 
+
       config={{
          signInRedirectURL: "https://9db0e38b-3313-4f87-81b6-335171ff5794.e1-us-east-azure.choreoapps.dev",
          signOutRedirectURL: "https://9db0e38b-3313-4f87-81b6-335171ff5794.e1-us-east-azure.choreoapps.dev",
@@ -26,6 +27,7 @@ root.render(
       <Provider store={store}>
          <MantineProvider>
             <App />
+
          </MantineProvider>
       </Provider>
    </AuthProvider>

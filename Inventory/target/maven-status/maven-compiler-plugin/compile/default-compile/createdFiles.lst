@@ -1,0 +1,7 @@
+com/example/Inventory/InventoryApplication.class
+com/example/Inventory/Inventory/OrderRequest.class
+com/example/Inventory/Inventory/Inventory.class
+com/example/Inventory/config/CorsConfig.class
+com/example/Inventory/Inventory/InventoryRepository.class
+com/example/Inventory/Inventory/InventoryController.class
+com/example/Inventory/Inventory/InventoryService.class
