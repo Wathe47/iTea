@@ -83,7 +83,7 @@ const ImageCarousel = () => {
         </Grid>
         <Grid item xs={12} md={6} lg={6}>
           <div style={{marginTop:"-10%", textAlign:"left", marginLeft:"25%"}}>
-          <Typography variant="h4">{product.name}</Typography>
+          <Typography variant="h3">{product.name}</Typography>
           <Typography variant="body1">{product.description}</Typography>
           <div style={{height:"80px"}}></div>
           <Typography variant="h6">LKR {product.price}.00</Typography>
@@ -116,9 +116,6 @@ const ImageCarousel = () => {
         </Grid>
       </Grid>
 
-      <Typography variant="h4" style={{ textAlign: "center", marginTop: "10%",marginBottom:"-8% " }}>
-        Explore More
-      </Typography>
       <ProductList />
     </div>
   );

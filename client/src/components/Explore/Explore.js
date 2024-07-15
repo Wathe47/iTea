@@ -61,7 +61,7 @@ const ProductList = () => {
                </Typography>
             )}   
          </Box>
-         
+
          <div className="product-list-container" style={{ background: "#ebebeb", margin: "40px auto", padding:"20px", width:'90%'}}>
       <Grid container spacing={3} justifyContent="space-around" sx={{margin:"10px"}}  >
         {currentItems.map((product) => (
@@ -111,13 +111,11 @@ const ProductList = () => {
                     </Typography>
                   </Typography>
                   <BottomNavigation showLabels style={{ backgroundColor: "transparent" }}>
-                    <Link to="/home">
                       <BottomNavigationAction
                         label="Add to Cart"
                         icon={<ShoppingCartIcon />}
                         style={{ color: "black" }}
                       />
-                    </Link>
                   </BottomNavigation>
                 </CardContent>
               </Link>

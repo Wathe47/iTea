@@ -11,6 +11,7 @@ import {
    try {
      const { data } = await api.fetchProducts();
      dispatch({ type: FETCH_PRODUCTS, payload: data });
+     console.log(data.status)
    } catch (error) {
      console.log(error);
    }
