@@ -15,30 +15,12 @@ root.render(
    <AuthProvider
 
       config={{
-         signInRedirectURL: "https://9db0e38b-3313-4f87-81b6-335171ff5794.e1-us-east-azure.choreoapps.dev",
-         signOutRedirectURL: "https://9db0e38b-3313-4f87-81b6-335171ff5794.e1-us-east-azure.choreoapps.dev",
+         signInRedirectURL: "http://localhost:3000",
+         signOutRedirectURL: "http://localhost:3000",
          clientID: "Q8zPt1tx2UrNsmSU2YfuLLTVpCga",
          baseUrl: "https://api.asgardeo.io/t/orgwathsalya",
          scope: ["openid", "email", "groups", "profile", "roles"]
       }}
-
-   //  config={ {
-   //    signInRedirectURL: "http://localhost:3000",
-   //    signOutRedirectURL: "http://localhost:3000",
-   //    clientID: "jweDabmkfrTPx2oQaSgEBijWQXUa",
-   //    baseUrl: "https://api.asgardeo.io/t/wathsalyagamage",
-   //    scope: [ 'openid', 'address', 'app_roles', 'email', 'groups', 'phone' ,'profile' ]
-   //  } }
-
-   //  config={ {
-   //      signInRedirectURL: "https://19ac2634-123c-44fa-b45a-0cb06cdb56b2.e1-us-east-azure.choreoapps.dev",
-   //      signOutRedirectURL: "https://19ac2634-123c-44fa-b45a-0cb06cdb56b2.e1-us-east-azure.choreoapps.dev",
-   //      clientID: "jweDabmkfrTPx2oQaSgEBijWQXUa",
-   //      baseUrl: "https://api.asgardeo.io/t/wathsalyagamage",
-   //      scope: [ 'openid', 'address', 'app_roles', 'email', 'groups', 'phone' ,'profile' ]
-   //  } }
-
-
    >
       <Provider store={store}>
          <MantineProvider>
