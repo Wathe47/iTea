@@ -16,10 +16,8 @@ import OrderCard from "./OrderCard";
 const SellerOrder = () => {
   const dispatch = useDispatch();
 
-
   const ordersData = useSelector((state) => state.order.orders);
   const {state} = useAuthContext();
-
    
   const userData = JSON.parse(window.localStorage.getItem("user"));
 
@@ -28,13 +26,10 @@ const SellerOrder = () => {
     dispatch(fetchOrderBymanufacturerEmail(userData?.email));
   }, []);
   
-
-  const isSignup = state?.isAuthenticated;
-
   if (!ordersData[0]) {
     return <Loading text={"No Orders Found!"} />;
   }
-  if (!isSignup) {
+  if (!state?.isAuthenticated) {
     return (
       <div>
         <Loading />
@@ -71,10 +66,7 @@ const SellerOrder = () => {
             item
             xs={11}
             container
-            // alignItems="center"
-            // justifyContent="center"
           >
-            {console.log(ordersData)}
             {ordersData.map((order) => (
               <Grid item xs={12}>
                 <OrderCard
@@ -88,7 +80,6 @@ const SellerOrder = () => {
                   totalPrice={order.totalPrice}
                   quantity={order.quantity}
                   userRole={userData.applicationRoles}
-
                 />
               </Grid>
             ))}

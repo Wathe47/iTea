@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Grow } from "@mui/material";
+import { Container, Grow, Typography } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import "./styles.css";
@@ -19,13 +19,13 @@ const Loading = ({text}) => {
       >
         <div>
           <img
-            src="https://res.cloudinary.com/dl8dikngu/image/upload/v1707476098/ziltkvevsqnizaeizkp4.png"
+            src="https://res.cloudinary.com/dl8dikngu/image/upload/v1716957275/Screenshot_from_2024-05-29_10-01-25_bxhh5i.png"
             alt="Loading"
-            width="20%"
+            width="40%"
           />
         </div>
-        <div>
-          <h1>{text}</h1>
+        <div style={{marginTop:'60px'}}>
+          <Typography variant="h2">{text}</Typography>
         </div>
       </Container>
     </Grow>

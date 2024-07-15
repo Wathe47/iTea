@@ -18,26 +18,16 @@ const OrderCard = ({
   quantity,
   cancelled,
   address,
-  userRole,
-
-
+  isUser,
 }) => {
+
   const dispatch = useDispatch();
-
   const userData = useSelector((state) => state.auth.authData);
-
-
-
-
-
   const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const handleEditClick = () => {
     setEditModalOpen(true);
   };
-
-
-
 
   const [showDetails, setShowDetails] = useState(false);
 
@@ -111,7 +101,7 @@ const OrderCard = ({
       </CardContent>
       <CardActions>
 
-        {userRole === "USER" &&  (
+        {isUser&&  (
           <Button size="small" onClick={handleEditClick} style={{marginLeft:"5px", marginTop:"-15px"}} >
             Edit
           </Button>

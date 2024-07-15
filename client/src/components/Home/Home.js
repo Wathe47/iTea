@@ -9,6 +9,8 @@ import { useAuthContext } from "@asgardeo/auth-react";
 
 import { Button, Container, Card, CardContent, CardMedia, Typography, Grid, Pagination, Box, RadioGroup, FormControl, FormLabel, Paper, FormControlLabel, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import Explore from "@mui/icons-material/Explore";
+import ProductList from "../Explore/Explore";
 
 
 const Home = () => {
@@ -140,80 +142,9 @@ const Home = () => {
                ))}
             </Grid>
          </Box>
+         
+         <ProductList/>
 
-         <div className="product-list-container" style={{ background: "#ebebeb", margin: "40px auto", padding:"20px", width:'90%'}}>
-      <Grid container spacing={3} justifyContent="space-around" sx={{margin:"10px"}}  >
-        {currentItems.map((product) => (
-          <Grid item key={product.id} xs={6} sm={4} md={3} lg={3}>
-            <Card sx={{ marginBottom: 5 }} elevation={0} className="explore--card" style={{boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)", borderRadius:"15px",width:"350px"}}>
-              <Link to={`/explore/${product.id}`} style={{ textDecoration: "none" }}>
-                <CardMedia
-                  component="img"
-                  style={{ objectFit: "cover", width: "100%", height: "200px"}}
-                  image={product.imageUrls[0]}
-                  alt={product.name}
-                />
-                <CardContent>
-                  <Typography
-                    gutterBottom
-                    variant="h7"
-                    component="div"
-                    style={{
-                      color: "black",
-                      fontWeight: "600",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    className="explore--card--name"
-                  >
-                    {product.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    className="explore--card--details"
-                  >
-                    {product.description}
-                    <br />
-                    <Typography
-                      variant="h6"
-                      style={{ fontWeight: "600" }}
-                      className="explore--card--price"
-                    >
-                      LKR {product.price}.00
-                    </Typography>
-                  </Typography>
-                  <BottomNavigation showLabels style={{ backgroundColor: "transparent" }}>
-                    <Link to="/home">
-                      <BottomNavigationAction
-                        label="Add to Cart"
-                        icon={<ShoppingCart />}
-                        style={{ color: "black" }}
-                      />
-                    </Link>
-                  </BottomNavigation>
-                </CardContent>
-              </Link>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      <div className="pagination">
-        <Pagination
-          count={count}
-          page={currentPage}
-          onChange={handlePageChange}
-          variant="outlined"
-          shape="rounded"
-        />
-      </div>
-    </div>
       </div>
    );
 };
