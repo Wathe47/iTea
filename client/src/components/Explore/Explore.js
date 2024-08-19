@@ -9,12 +9,12 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-const ProductList = () => {
+
+const ProductList = ({itemsPerPage=15, heading="EXPLORE PRODUCTS"}) => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
   console.log(products);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 16; // Constant value for items per page
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -46,7 +46,7 @@ const ProductList = () => {
                   fontWeight: "bold",
                }}
             >
-               EXPLORE PRODUCTS
+               {heading}
             </Typography>
             {products.length === 0 && (
                <Typography
@@ -65,7 +65,7 @@ const ProductList = () => {
          <div className="product-list-container" style={{ background: "#ebebeb", margin: "40px auto", padding:"20px", width:'90%'}}>
       <Grid container spacing={3} justifyContent="space-around" sx={{margin:"10px"}}  >
         {currentItems.map((product) => (
-          <Grid item key={product.id} xs={6} sm={4} md={3} lg={3}>
+          <Grid item key={product.id} xs={12} sm={8} md={6} lg={4}>
             <Card sx={{ marginBottom: 5 }} elevation={0} className="explore--card" style={{boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)", borderRadius:"15px",width:"350px"}}>
               <Link to={`/explore/${product.id}`} style={{ textDecoration: "none" }}>
                 <CardMedia

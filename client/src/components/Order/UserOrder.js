@@ -4,6 +4,7 @@ import { Grid } from "@mui/material";
 import { useAuthContext } from "@asgardeo/auth-react";
 
 import "./styles.css";
+import teaImage from './tea.jpg';
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -62,7 +63,7 @@ const UserOrder = () => {
          }}
       >
          <img
-            src="https://png.pngtree.com/thumb_back/fh260/background/20230518/pngtree-the-candy-shop-at-gordon-s-wizarding-world-image_2536653.jpg"
+            src={teaImage}
             alt="background"
             className="product--background"
          />
@@ -89,7 +90,7 @@ const UserOrder = () => {
                            totalPrice={order.totalPrice}
                            quantity={order.quantity}
                            isUser={isUser}
-
+                           imageUrl={order.imageUrl}
                         />
                      </Grid>
                   ))}

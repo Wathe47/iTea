@@ -82,7 +82,7 @@ const Home = () => {
 
    const welcomeNote = userDetails?.givenName ? (
       <Typography variant="h4" gutterBottom style={{ marginBottom: "10%", marginTop: "20%", fontFamily: "poppins", fontSize: '60px', fontWeight: "bold", textShadow: "4px 4px 25px grey" }}>
-         Welcome back, <span style={{ fontSize: "60px" }}> {userDetails.givenName}! </span>
+         Welcome back  <span style={{ fontSize: "60px" }}> {userDetails.givenName}! </span>
       </Typography>
    ) : (
       <Typography variant="h4" gutterBottom style={{ marginBottom: "10%", marginTop: "20%", fontFamily: "poppins", fontSize: '60px', fontWeight: "bold", textShadow: "4px 4px 25px grey" }}>
@@ -93,7 +93,7 @@ const Home = () => {
    return (
       <div>
          <div style={{ backgroundImage: `url('https://res.cloudinary.com/dl8dikngu/image/upload/v1716977653/macro-photograph-of-a-tea-cup-filled-with-steeping-tea-tendrils-of-mist-rising-from-the-surface-te_skqcwx.jpg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-            <Container maxWidth="xl" style={{ minHeight: '100vh', display: 'flex', alignItems: 'left', justifyContent: 'space-between' }}>
+            <Container maxWidth="xl" style={{ minHeight: '100vh', display: 'flex', alignItems: 'left', justifyContent: 'space-between',marginLeft:"10%" }}>
 
                <div style={{ width: "40%", marginLeft: "-130px" }}>
                   <div style={{ marginLeft: '50px' }}>
@@ -143,7 +143,7 @@ const Home = () => {
             </Grid>
          </Box>
          
-         <ProductList/>
+         <ProductList itemsPerPage={9} heading=" "/>
 
       </div>
    );

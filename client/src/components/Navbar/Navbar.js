@@ -159,7 +159,7 @@ const Navbar = () => {
          case "ADMIN":
             return "explore";
          case "MANUFACTURER":
-            return "addproductdetails";
+            return "products";
          default:
             return "explore";
       }
@@ -240,7 +240,7 @@ const Navbar = () => {
                </Item>
             </Grid>
             <Grid
-               xs={1} sm={2} md={3}
+               xs={1} sm={2} md={2}
                container
                direction="row"
                justifyContent="flex-start"
@@ -259,9 +259,7 @@ const Navbar = () => {
                         className="icon-text"
                         style={{ textTransform: "uppercase" }}
                      >
-                        {role === "ADMIN"
-                           ? "ADMIN PROFILE"
-                           : `${userDetails?.givenName} 's Profile`}
+                        PROFILE
                      </span>
                      {!isDropdownOpen ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
                      <DropdownContent className={isDropdownOpen ? "show" : ""} style={{ marginTop: "-65px", marginLeft: "50px", }}>

@@ -33,5 +33,6 @@ public class Order {
     private long quantity;
     private long oldQuantity;
     private String manufacturerEmail;
+    private String imageUrl;
 
 }

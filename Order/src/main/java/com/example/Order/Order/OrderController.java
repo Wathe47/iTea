@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/order")
+@RequestMapping("api/order")
 public class OrderController {
     private final OrderService orderService;
     @Autowired
@@ -46,7 +46,7 @@ public class OrderController {
     @PostMapping("/add")
     public void addNewOrder(@RequestBody Order order) {
         try {
-            String inventoryUrl = "http://localhost:9001/api/v1/inventory/add-new-order";
+            String inventoryUrl = "http://localhost:9001/api/inventory/add-new-order";
             restTemplate.postForEntity(inventoryUrl, order, Long.class);
         } catch (RestClientException e) {
             System.out.println("RestClientException: " + e.toString());
@@ -67,7 +67,7 @@ public class OrderController {
     public void updateOrder(@PathVariable("orderId") Long orderId,
                             @RequestBody Order order) {
         try {
-            String inventoryUrl = "http://localhost:9001/api/v1/inventory/update-order";
+            String inventoryUrl = "http://localhost:9001/api/inventory/update-order";
             restTemplate.postForEntity(inventoryUrl, order, Long.class);
         } catch (RestClientException e) {
             System.out.println("RestClientException: " + e.toString());

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 import { useAuthContext } from "@asgardeo/auth-react";
 import "./styles.css";
+import teaImage from './tea.jpg';
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -56,7 +57,7 @@ const SellerOrder = () => {
       }}
     >
       <img
-        src="https://png.pngtree.com/thumb_back/fh260/background/20230518/pngtree-the-candy-shop-at-gordon-s-wizarding-world-image_2536653.jpg"
+        src={teaImage}
         alt="background"
         className="product--background"
       />
@@ -80,6 +81,7 @@ const SellerOrder = () => {
                   totalPrice={order.totalPrice}
                   quantity={order.quantity}
                   userRole={userData.applicationRoles}
+                  imageUrl={order.imageUrl}
                 />
               </Grid>
             ))}
