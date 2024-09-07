@@ -1,23 +1,21 @@
-# Use the official OpenJDK 17 image as a base image
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-jammy AS build
+WORKDIR /usr/app
 
-# Create a group and user to run the app
-RUN addgroup -S spring && adduser -S spring -G spring
+# Package stage
+FROM eclipse-temurin:17-jre-jammy
+COPY /target/Inventory-0.0.1-SNAPSHOT.jar /usr/app/choreotest/Inventory-0.0.1-SNAPSHOT.jar
 
-# Set the working directory inside the container
-WORKDIR /app
+RUN mkdir /tmp/tomcat static
+RUN chmod -R 777 /tmp
+RUN chmod -R 777 /usr/app/choreotest/Inventory-0.0.1-SNAPSHOT.jar
+RUN addgroup --system --gid 1001 wso2
+RUN adduser --system --uid 10014 wso2
+# Set a non-root user
+USER 10014
 
-# Change ownership of the working directory
-RUN chown -R spring:spring /app
-
-# Switch to the non-root user
-USER spring
-
-# Copy the JAR file into the container
-COPY target/Inventory-0.0.1-SNAPSHOT.jar app.jar
-
-# Expose the port that the application will run on
+ENTRYPOINT ["java","-jar","/usr/app/choreotest/Inventory-0.0.1-SNAPSHOT.jar"]
+RUN echo `ls`
 EXPOSE 9091
 
-# Define the command to run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# BUILD WITH : docker build -t certifier/rest-app:<tag> .
+# RUN WITH : docker run -d -p 8080:8080 certifier/rest-app:<tag>
