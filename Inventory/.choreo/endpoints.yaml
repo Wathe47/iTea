@@ -1,7 +1,7 @@
 version: 0.1
 endpoints:
   - name: Inventory API
-    port: 8080
+    port: 9091
     type: REST
     networkVisibility: Public
     context: /Inventory
