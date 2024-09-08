@@ -4,6 +4,5 @@ endpoints:
     port: 9091
     type: REST
     networkVisibility: Public
-    context: /Inventory
+    context: /
     schemaFilePath: openapi.yaml
-  
