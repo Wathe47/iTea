@@ -14,8 +14,8 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000"); // Replace with the origin of your React app
-//        config.addAllowedOrigin("https://19ac2634-123c-44fa-b45a-0cb06cdb56b2.e1-us-east-azure.choreoapps.dev"); // Replace with the origin of your React app
+      //   config.addAllowedOrigin("http://localhost:3000"); 
+       config.addAllowedOrigin("https://itea.onrender.com/"); 
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
