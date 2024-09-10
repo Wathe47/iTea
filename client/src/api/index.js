@@ -3,8 +3,8 @@ import axios from "axios";
 // const inventoryBaseURL = "http://localhost:9001/api/inventory";
 // const orderBaseURL = "http://localhost:9002/api/order";
 
-const inventoryBaseURL = "https://itea-inventory.onrender.com";
-const orderBaseURL = "https://itea-order.onrender.com";
+const inventoryBaseURL = "https://itea-inventory.onrender.com/api/inventory";
+const orderBaseURL = "https://itea-order.onrender.com/api/order";
 
 const inventoryService = axios.create({
    baseURL: inventoryBaseURL,
